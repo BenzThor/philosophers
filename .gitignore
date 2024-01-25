@@ -1,0 +1,11 @@
+a.out
+*.o
+*.a
+*.d
+*.h.*
+philosophers
+.vscode
+*.h.gch
+.nfs*
+test*
+tmp*
