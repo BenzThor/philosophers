@@ -9,3 +9,4 @@ philosophers
 .nfs*
 test*
 tmp*
+*.pdf

@@ -6,7 +6,7 @@
 /*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 15:02:48 by tbenz             #+#    #+#             */
-/*   Updated: 2024/01/25 15:21:58 by tbenz            ###   ########.fr       */
+/*   Updated: 2024/01/29 14:54:56 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	main(int argc, char **argv)
 {
-	t_vars	*vars;
+	t_vars	vars;
 
-	ft_arg_check(vars, argc, argv);
+	ft_bzero(&vars, sizeof(t_vars));
+	ft_arg_check(&vars, argc, argv);
 }

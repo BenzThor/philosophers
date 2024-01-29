@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bpochlau <bpochlau@student.42vienna.com    +#+  +:+       +#+         #
+#    By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/01/24 14:19:20 by bpochlau         ###   ########.fr        #
+#    Updated: 2024/01/29 17:03:41 by tbenz            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,8 +17,6 @@ NAME			= philosophers
 GREEN			= \033[0;32m
 RED				= \033[0;31m
 RESET			= \033[0m
-
-LIBFT 			= ./libraries/libft/libft.a
 
 CC 				= cc
 
@@ -32,14 +30,18 @@ SRCS_DIR		= ./sources
 OBJDIR			= ./objs
 
 HEADER			= $(addprefix $(INC_DIR)/,\
-				minishell.h)
+				philosophers.h)
 
 SRCS 			= $(addprefix $(SRCS_DIR)/,\
-					philosophers.c)
+					exit.c \
+					input_check.c \
+					philosophers.c \
+					utils.c \
+					utils_write.c)
+
+all:			${NAME}
 
 OBJS := $(SRCS:$(SRCS_DIR)/%.c=$(OBJDIR)/%.o)
-
-all:			${LIBFT} ${NAME}
 
 $(OBJDIR)/%.o: $(SRCS_DIR)/%.c | $(OBJDIR)
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -47,31 +49,25 @@ $(OBJDIR)/%.o: $(SRCS_DIR)/%.c | $(OBJDIR)
 $(OBJDIR):
 	mkdir -p $(OBJDIR)
 
-${NAME}:		${LIBFT} $(HEADER) $(OBJS)
-				${CC} ${OBJS} ${LIBFT} ${CFLAGS} ${LRL} -o ${NAME}
+${NAME}:		$(HEADER) $(OBJS)
+				${CC} ${OBJS} ${CFLAGS} -o ${NAME}
 				@echo "$(NAME): $(GREEN)$(NAME) was compiled.$(RESET)"
 				@echo
 
-${LIBFT}:
-				@echo
-				make all -C libraries/libft
-
 clean:
-				make clean -C libraries/libft
 				${REMOVE_DIR} ${OBJDIR}
 				@echo
 
 fclean:
 				${REMOVE} ${NAME}
-				make fclean -C libraries/libft
 				${REMOVE_DIR} ${OBJDIR}
-				@echo "${NAME}: ${RED}${NAME} and libft.a were deleted${RESET}"
+				@echo "${NAME}: ${RED}${NAME} was deleted${RESET}"
 				@echo
 
 re:				fclean all
 
-test:			${LIBFT} $(HEADER)
-				${CC} -g $(SRCS) ${LIBFT} ${LRL} -o ${NAME}
+test:			$(HEADER)
+				${CC} -g $(SRCS) -o ${NAME}
 
 valgrind:		$(NAME)
 				valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes \

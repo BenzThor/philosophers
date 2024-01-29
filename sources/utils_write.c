@@ -1,31 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcmp.c                                        :+:      :+:    :+:   */
+/*   utils_write.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/07 14:33:12 by tbenz             #+#    #+#             */
-/*   Updated: 2023/11/30 16:12:42 by tbenz            ###   ########.fr       */
+/*   Created: 2024/01/29 17:01:47 by tbenz             #+#    #+#             */
+/*   Updated: 2024/01/29 17:02:50 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../inc/philosophers.h"
 
-int	ft_memcmp(const void *s1, const void *s2, size_t n)
+void	ft_putchar_fd(char c, int fd)
 {
-	unsigned char	*ptr1;
-	unsigned char	*ptr2;
+	write(fd, &c, 1);
+}
 
-	if (n == 0)
-		return (0);
-	ptr1 = (unsigned char *)s1;
-	ptr2 = (unsigned char *)s2;
-	while (n > 1 && *ptr1 == *ptr2)
+void	ft_putnbr_fd(long n, int fd)
+{
+	long long	i;
+
+	i = n;
+	if (i < 0)
 	{
-		ptr1++;
-		ptr2++;
-		n--;
+		ft_putchar_fd('-', fd);
+		i *= -1;
 	}
-	return (*ptr1 - *ptr2);
+	if (i > 9)
+	{
+		ft_putnbr_fd(i / 10, fd);
+		ft_putnbr_fd(i % 10, fd);
+	}
+	else
+		ft_putchar_fd(i + 48, fd);
+}
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	while (*s)
+	{
+		ft_putchar_fd(*s, fd);
+		s++;
+	}
 }
