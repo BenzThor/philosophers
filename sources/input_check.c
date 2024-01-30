@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   input_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
+/*   By: thorben <thorben@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 15:06:31 by tbenz             #+#    #+#             */
-/*   Updated: 2024/01/29 17:12:50 by tbenz            ###   ########.fr       */
+/*   Updated: 2024/01/30 18:58:30 by thorben          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philosophers.h"
-
 
 long long int	ft_atoi_ll(t_vars *vars, const char *str)
 {
@@ -19,18 +18,18 @@ long long int	ft_atoi_ll(t_vars *vars, const char *str)
 	long long int	sum;
 
 	sign = 1;
-	if (*str == 43 || *str == 45)
+	if (*str == '-' || *str == '+')
 	{
-		if (*str == 45)
+		if (*str == '-')
 			sign *= -1;
 		str++;
 	}
 	sum = 0;
-	while (*str > 47 && *str < 58)
+	while (*str >= '0' && *str <= '9')
 	{
-		if (sum > __LONG_LONG_MAX__ / 10
-			|| (sum == __LONG_LONG_MAX__ / 10 && sign == 1 && *str > '7')
-			|| (sum == __LONG_LONG_MAX__ / 10 && sign == -1 && *str > '8'))
+		if (sum > __LONG_LONG_MAX__ / 10 || (sum == __LONG_LONG_MAX__ / 10
+				&& sign == 1 && *str > '7') || (sum == __LONG_LONG_MAX__ / 10
+				&& sign == -1 && *str > '8'))
 			ft_exit(vars, EXC_ERR);
 		sum *= 10;
 		sum += (*str - '0');
@@ -53,13 +52,22 @@ void	ft_save_num(t_vars *vars, char *str, int i)
 	uns = (unsigned)llint;
 	if (uns == 0 && i != 5)
 		ft_exit(vars, NEG_ERR);
-	vars->settings[i - 1] = uns;
+	if (i == 1)
+		vars->phil_num = uns;
+	else if (i == 2)
+		vars->time_die = uns;
+	else if (i == 3)
+		vars->time_eat = uns;
+	else if (i == 4)
+		vars->time_sleep = uns;
+	else if (i == 5)
+		vars->eat_req = uns;
 }
 
 void	ft_check_number(t_vars *vars, char *str)
 {
-	while (*str == ' ' || *str == '\n' || *str == '\t'
-	|| *str == '\r' || *str == '\f' || *str == '\v')
+	while (*str == ' ' || *str == '\n' || *str == '\t' || *str == '\r'
+		|| *str == '\f' || *str == '\v')
 		str++;
 	if (*str == '-' || *str == '+')
 		str++;
@@ -84,4 +92,6 @@ void	ft_arg_check(t_vars *vars, int argc, char **argv)
 		ft_save_num(vars, argv[i], i);
 		i++;
 	}
+	if (argc == 5)
+		vars->eat_req = -1;
 }

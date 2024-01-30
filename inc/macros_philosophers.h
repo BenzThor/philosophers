@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   macros_philosophers.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
+/*   By: thorben <thorben@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:52:29 by bpochlau          #+#    #+#             */
-/*   Updated: 2024/01/29 16:31:56 by tbenz            ###   ########.fr       */
+/*   Updated: 2024/01/30 18:59:31 by thorben          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MACROS_MINISHELL_H
-# define MACROS_MINISHELL_H
+#ifndef MACROS_PHILOSOPHERS_H
+# define MACROS_PHILOSOPHERS_H
 
 # define NOT_DEFINED 999
 

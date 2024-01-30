@@ -1,0 +1,62 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: thorben <thorben@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/30 18:19:12 by thorben           #+#    #+#             */
+/*   Updated: 2024/01/30 19:35:47 by thorben          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../inc/philosophers.h"
+
+void	mallocate(t_vars *vars)
+{
+	vars->tid = calloc(vars->phil_num, sizeof(pthread_t));
+	vars->forks = calloc(vars->phil_num, sizeof(pthread_mutex_t));
+	vars->phils = calloc(vars->phil_num, sizeof(t_phil));
+	if (!vars->tid || !vars->forks || !vars->phils)
+		ft_exit(vars, MALLOC_ERR);
+}
+
+void	forkinit(t_vars *vars)
+{
+	int	i;
+
+	i = -1;
+	while (++i < vars->phil_num)
+		pthread_mutex_init(&vars->forks[i], NULL);
+	vars->phils[0].l_fork = &vars->forks[0];
+	vars->phils[0].r_fork = &vars->forks[vars->phil_num - 1];
+	i = 0;
+	while (++i < vars->phil_num)
+	{
+		vars->phils[i].l_fork = &vars->forks[i];
+		vars->phils[i].r_fork = &vars->forks[i - 1];
+	}
+}
+
+void	philsinit(t_vars *vars)
+{
+	int	i;
+
+	i = -1;
+	while (i++ < vars->phil_num)
+	{
+		vars->phils[i].vars = vars;
+		vars->phils[i].id = i + 1;
+		vars->time_die = vars->time_die;
+		pthread_mutex_init(&vars->phils[i].lock, NULL);
+	}
+}
+
+void	ft_init(t_vars *vars)
+{
+	pthread_mutex_init(&vars->write, NULL);
+	pthread_mutex_init(&vars->meal, NULL);
+	mallocate(vars);
+	forkinit(vars);
+	philsinit(vars);
+}

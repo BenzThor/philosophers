@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
+/*   By: thorben <thorben@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 15:02:48 by tbenz             #+#    #+#             */
-/*   Updated: 2024/01/29 14:54:56 by tbenz            ###   ########.fr       */
+/*   Updated: 2024/01/30 18:18:51 by thorben          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,4 +18,5 @@ int	main(int argc, char **argv)
 
 	ft_bzero(&vars, sizeof(t_vars));
 	ft_arg_check(&vars, argc, argv);
+	ft_init(&vars);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
+/*   By: thorben <thorben@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 14:52:41 by tbenz             #+#    #+#             */
-/*   Updated: 2024/01/29 17:02:59 by tbenz            ###   ########.fr       */
+/*   Updated: 2024/01/30 18:57:55 by thorben          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,19 @@ size_t	ft_strlen(const char *s)
 	while (s[i] != '\0')
 		i++;
 	return (i);
+}
+
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	void	*allspc;
+	size_t	total_size;
+
+	total_size = nmemb * size;
+	if (nmemb != 0 && size != 0 && nmemb > (total_size / size))
+		return (NULL);
+	allspc = malloc(total_size);
+	if (allspc == NULL)
+		return (NULL);
+	ft_bzero(allspc, total_size);
+	return (allspc);
 }
