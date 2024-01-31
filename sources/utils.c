@@ -6,7 +6,7 @@
 /*   By: thorben <thorben@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 14:52:41 by tbenz             #+#    #+#             */
-/*   Updated: 2024/01/30 18:57:55 by thorben          ###   ########.fr       */
+/*   Updated: 2024/01/31 11:19:27 by thorben          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,23 @@ void	*ft_calloc(size_t nmemb, size_t size)
 		return (NULL);
 	ft_bzero(allspc, total_size);
 	return (allspc);
+}
+
+__uint64_t	get_time(void)
+{
+	struct timeval	tv;
+
+	if (gettimeofday(&tv, NULL) == -1)
+		ft_putstr_fd("get_time() error\n", 2);
+	return (tv.tv_sec * 1000000LL + tv.tv_usec);
+}
+
+int	ft_usleep(__suseconds_t microseconds)
+{
+	__uint64_t	start;
+
+	start = get_time();
+	while (get_time - start < microseconds)
+		usleep(microseconds / 10);
+	return (0);
 }

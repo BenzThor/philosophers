@@ -6,7 +6,7 @@
 /*   By: thorben <thorben@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 15:06:31 by tbenz             #+#    #+#             */
-/*   Updated: 2024/01/30 18:58:30 by thorben          ###   ########.fr       */
+/*   Updated: 2024/01/31 10:03:15 by thorben          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,4 +94,5 @@ void	ft_arg_check(t_vars *vars, int argc, char **argv)
 	}
 	if (argc == 5)
 		vars->eat_req = -1;
+	vars->in_check = 1;
 }

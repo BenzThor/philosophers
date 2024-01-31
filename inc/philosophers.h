@@ -6,7 +6,7 @@
 /*   By: thorben <thorben@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 14:50:22 by tbenz             #+#    #+#             */
-/*   Updated: 2024/01/31 09:08:59 by thorben          ###   ########.fr       */
+/*   Updated: 2024/01/31 11:20:08 by thorben          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,17 @@ typedef struct s_phil
 // struct that stores all the main information
 typedef struct s_vars
 {
-	pthread_t		tid;
+	pthread_t		*tid;
 	unsigned int	phil_num;
 	unsigned int	time_die;
 	unsigned int	time_eat;
 	unsigned int	time_sleep;
 	unsigned int	eat_req;
+	__uint64_t		start_time;
 	int				dead;
 	int				done;
+	int				in_check;
+	int				init_check;
 	t_phil			*phils;
 	pthread_mutex_t	meal;
 	pthread_mutex_t	write;

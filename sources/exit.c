@@ -6,7 +6,7 @@
 /*   By: thorben <thorben@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 15:08:40 by tbenz             #+#    #+#             */
-/*   Updated: 2024/01/30 19:53:31 by thorben          ###   ########.fr       */
+/*   Updated: 2024/01/31 10:19:06 by thorben          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,15 @@ void	ft_print_err(int err)
 	}
 	else if (err == NEG_ERR)
 		ft_putstr_fd("We can't travel in time and need one philo\n", 2);
+	// else if (err == TID_ALL_ERR)
+	// 	ft_putstr_fd("There has been an error mallocing the threads\n", 2);
+	// else if (err == FORK_ALL_ERR)
+	// 	ft_putstr_fd("There has been an error mallocing the forks\n", 2);
+	// else if (err == PHILS_ALL_ERR)
+	// 	ft_putstr_fd("There has been an error mallocing the philosophers\n", 2);
 }
 
-void	clean_vars(t_vars *vars, int err)
+void	clean_vars_exit(t_vars *vars, int err)
 {
 	if (vars->tid)
 		free(vars->tid);
@@ -43,19 +49,26 @@ void	clean_vars(t_vars *vars, int err)
 
 void	ft_exit(t_vars *vars, int ec)
 {
-	int	i;
+	unsigned int	i;
 
 	if (ec)
 		ft_print_err(ec);
-	i = 0;
-	if (!OK)
-		clean_vars(vars, ec);
-	while (vars->phil_num && i < vars->phil_num)
+	if (ec != OK && ec != THREAD_ERR)
+		clean_vars_exit(vars, ec);
+	// exit(ec);
+	if (vars->in_check)
 	{
-		pthread_mutex_destroy(&vars->forks[i]);
-		pthread_mutex_destroy(&vars->phils[i].lock);
+		pthread_mutex_destroy(&vars->meal);
+		pthread_mutex_destroy(&vars->write);
+		if (vars->init_check)
+		{
+			i = -1;
+			while (vars->phil_num && ++i < vars->phil_num)
+			{
+				pthread_mutex_destroy(&vars->forks[i]);
+				pthread_mutex_destroy(&vars->phils[i].lock);
+			}
+		}
 	}
-	pthread_mutex_destroy(&vars->meal);
-	pthread_mutex_destroy(&vars->write);
 	clean_vars(vars, ec);
 }

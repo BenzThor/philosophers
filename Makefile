@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+         #
+#    By: thorben <thorben@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/01/29 17:03:41 by tbenz            ###   ########.fr        #
+#    Updated: 2024/01/31 09:54:18 by thorben          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ HEADER			= $(addprefix $(INC_DIR)/,\
 
 SRCS 			= $(addprefix $(SRCS_DIR)/,\
 					exit.c \
+					init.c \
 					input_check.c \
 					philosophers.c \
 					utils.c \

@@ -6,7 +6,7 @@
 /*   By: thorben <thorben@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:52:29 by bpochlau          #+#    #+#             */
-/*   Updated: 2024/01/30 18:59:31 by thorben          ###   ########.fr       */
+/*   Updated: 2024/01/31 10:00:48 by thorben          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,8 @@
 # define PHIL_ERR 1300
 # define EXC_ERR 1400
 # define NEG_ERR 1500
+// # define TID_ALL_ERR 1600
+// # define FORK_ALL_ERR 1700
+// # define PHILS_ALL_ERR 1800
 
 #endif

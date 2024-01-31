@@ -6,7 +6,7 @@
 /*   By: thorben <thorben@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:19:12 by thorben           #+#    #+#             */
-/*   Updated: 2024/01/31 09:05:35 by thorben          ###   ########.fr       */
+/*   Updated: 2024/01/31 10:16:03 by thorben          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	philsinit(t_vars *vars)
 {
-	int	i;
+	unsigned int	i;
 
 	i = -1;
 	while (i++ < vars->phil_num)
@@ -28,7 +28,7 @@ void	philsinit(t_vars *vars)
 
 void	forkinit(t_vars *vars)
 {
-	int	i;
+	unsigned int	i;
 
 	i = -1;
 	while (++i < vars->phil_num)
@@ -59,4 +59,5 @@ void	ft_init(t_vars *vars)
 	mallocate(vars);
 	forkinit(vars);
 	philsinit(vars);
+	vars->init_check = 1;
 }
