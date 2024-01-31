@@ -6,19 +6,24 @@
 /*   By: thorben <thorben@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:19:12 by thorben           #+#    #+#             */
-/*   Updated: 2024/01/30 19:35:47 by thorben          ###   ########.fr       */
+/*   Updated: 2024/01/31 09:05:35 by thorben          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philosophers.h"
 
-void	mallocate(t_vars *vars)
+void	philsinit(t_vars *vars)
 {
-	vars->tid = calloc(vars->phil_num, sizeof(pthread_t));
-	vars->forks = calloc(vars->phil_num, sizeof(pthread_mutex_t));
-	vars->phils = calloc(vars->phil_num, sizeof(t_phil));
-	if (!vars->tid || !vars->forks || !vars->phils)
-		ft_exit(vars, MALLOC_ERR);
+	int	i;
+
+	i = -1;
+	while (i++ < vars->phil_num)
+	{
+		vars->phils[i].vars = vars;
+		vars->phils[i].id = i + 1;
+		vars->time_die = vars->time_die;
+		pthread_mutex_init(&vars->phils[i].lock, NULL);
+	}
 }
 
 void	forkinit(t_vars *vars)
@@ -38,18 +43,13 @@ void	forkinit(t_vars *vars)
 	}
 }
 
-void	philsinit(t_vars *vars)
+void	mallocate(t_vars *vars)
 {
-	int	i;
-
-	i = -1;
-	while (i++ < vars->phil_num)
-	{
-		vars->phils[i].vars = vars;
-		vars->phils[i].id = i + 1;
-		vars->time_die = vars->time_die;
-		pthread_mutex_init(&vars->phils[i].lock, NULL);
-	}
+	vars->tid = calloc(vars->phil_num, sizeof(pthread_t));
+	vars->forks = calloc(vars->phil_num, sizeof(pthread_mutex_t));
+	vars->phils = calloc(vars->phil_num, sizeof(t_phil));
+	if (!vars->tid || !vars->forks || !vars->phils)
+		ft_exit(vars, MALLOC_ERR);
 }
 
 void	ft_init(t_vars *vars)

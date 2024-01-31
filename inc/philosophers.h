@@ -6,7 +6,7 @@
 /*   By: thorben <thorben@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 14:50:22 by tbenz             #+#    #+#             */
-/*   Updated: 2024/01/30 19:01:32 by thorben          ###   ########.fr       */
+/*   Updated: 2024/01/31 09:07:19 by thorben          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,16 @@ typedef struct s_vars
 void				ft_exit(t_vars *vars, int err);
 // prints an adequate error message
 void				ft_print_err(int err);
+
+/* init */
+// initiates all the necesarry mutex and philosophers
+void				ft_init(t_vars *vars);
+// callocs all the needed elements:tids, forks and phils
+void				mallocate(t_vars *vars);
+// initiates the fork mutexes and gives each philosopher a left and right fork
+void				forkinit(t_vars *vars);
+// sets the philosophers variables to their respective inital values
+void				philsinit(t_vars *vars);
 
 /* input_check */
 // checks the arguments for valid input
