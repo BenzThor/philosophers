@@ -6,7 +6,7 @@
 /*   By: thorben <thorben@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 14:50:22 by tbenz             #+#    #+#             */
-/*   Updated: 2024/01/31 09:07:19 by thorben          ###   ########.fr       */
+/*   Updated: 2024/01/31 09:08:59 by thorben          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <sys/time.h>
 # include <unistd.h>
 
+// struct that stores then information of a single philosopher
 typedef struct s_phil
 {
 	struct s_vars	*vars;
@@ -33,6 +34,7 @@ typedef struct s_phil
 	pthread_mutex_t	*l_fork;
 }					t_phil;
 
+// struct that stores all the main information
 typedef struct s_vars
 {
 	pthread_t		tid;
