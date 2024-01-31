@@ -6,28 +6,32 @@
 /*   By: thorben <thorben@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 15:08:40 by tbenz             #+#    #+#             */
-/*   Updated: 2024/01/31 10:19:06 by thorben          ###   ########.fr       */
+/*   Updated: 2024/01/31 15:54:05 by thorben          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philosophers.h"
 
-void	ft_print_err(int err)
+void	ft_print_err(int ec)
 {
-	if (err == ARGC_ERR)
+	if (ec == ARGC_ERR)
 		ft_putstr_fd("Go, check your arguments\n", 2);
-	else if (err == MALLOC_ERR)
+	else if (ec == MALLOC_ERR)
 		ft_putstr_fd("There has been a malloc error\n", 2);
-	else if (err == NUM_ERR)
+	else if (ec == NUM_ERR)
 		ft_putstr_fd("You should put digits or one + sign at the start\n", 2);
-	else if (err == EXC_ERR)
+	else if (ec == EXC_ERR)
 	{
 		ft_putstr_fd("One of your numbers is too long. The maximum is ", 2);
 		ft_putnbr_fd(UINT_MAX, 2);
 		ft_putstr_fd("\n", 2);
 	}
-	else if (err == NEG_ERR)
+	else if (ec == NEG_ERR)
 		ft_putstr_fd("We can't travel in time and need one philo\n", 2);
+	else if (ec == THREAD_ERR)
+		ft_putstr_fd("An error occured while creating the threads\n", 2);
+	else if (ec == JOIN_ERR)
+		ft_putstr_fd("An error occured while joining the threads\n", 2);
 	// else if (err == TID_ALL_ERR)
 	// 	ft_putstr_fd("There has been an error mallocing the threads\n", 2);
 	// else if (err == FORK_ALL_ERR)
