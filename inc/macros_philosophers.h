@@ -6,7 +6,7 @@
 /*   By: thorben <thorben@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:52:29 by bpochlau          #+#    #+#             */
-/*   Updated: 2024/01/31 10:00:48 by thorben          ###   ########.fr       */
+/*   Updated: 2024/01/31 12:12:35 by thorben          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@
 // # define TID_ALL_ERR 1600
 // # define FORK_ALL_ERR 1700
 // # define PHILS_ALL_ERR 1800
+# define THREAD_ERR 1900
 
 #endif
