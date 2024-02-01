@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_write.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
+/*   By: thorben <thorben@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 17:01:47 by tbenz             #+#    #+#             */
-/*   Updated: 2024/01/29 17:02:50 by tbenz            ###   ########.fr       */
+/*   Updated: 2024/02/01 15:52:03 by thorben          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_putchar_fd(char c, int fd)
 	write(fd, &c, 1);
 }
 
-void	ft_putnbr_fd(long n, int fd)
+void	ft_putnbr_fd(unsigned long n, int fd)
 {
 	long long	i;
 

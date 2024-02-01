@@ -6,7 +6,7 @@
 /*   By: thorben <thorben@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:52:29 by bpochlau          #+#    #+#             */
-/*   Updated: 2024/01/31 15:51:32 by thorben          ###   ########.fr       */
+/*   Updated: 2024/02/01 16:19:19 by thorben          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,12 @@
 // # define PHILS_ALL_ERR 1800
 # define THREAD_ERR 1900
 # define JOIN_ERR 2000
+
+// behaviour
+# define EATING 10000
+# define SLEEPING 11000
+# define THINKING 12000
+# define DEAD 13000
+# define GRAB_FORKS 14000
 
 #endif

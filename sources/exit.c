@@ -6,7 +6,7 @@
 /*   By: thorben <thorben@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 15:08:40 by tbenz             #+#    #+#             */
-/*   Updated: 2024/01/31 15:54:05 by thorben          ###   ########.fr       */
+/*   Updated: 2024/02/01 17:27:57 by thorben          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	ft_exit(t_vars *vars, int ec)
 
 	if (ec)
 		ft_print_err(ec);
-	if (ec != OK && ec != THREAD_ERR)
+	if (ec != OK && ec != THREAD_ERR && ec != JOIN_ERR)
 		clean_vars_exit(vars, ec);
 	// exit(ec);
 	if (vars->in_check)
@@ -74,5 +74,5 @@ void	ft_exit(t_vars *vars, int ec)
 			}
 		}
 	}
-	clean_vars(vars, ec);
+	clean_vars_exit(vars, ec);
 }

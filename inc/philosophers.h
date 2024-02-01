@@ -6,7 +6,7 @@
 /*   By: thorben <thorben@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 14:50:22 by tbenz             #+#    #+#             */
-/*   Updated: 2024/01/31 12:01:32 by thorben          ###   ########.fr       */
+/*   Updated: 2024/02/01 16:45:20 by thorben          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 typedef struct s_phil
 {
 	struct s_vars	*vars;
+	pthread_t		t;
 	int				id;
 	int				eat_cnt;
 	int				eating;
