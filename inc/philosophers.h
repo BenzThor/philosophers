@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thorben <thorben@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 14:50:22 by tbenz             #+#    #+#             */
-/*   Updated: 2024/02/01 16:45:20 by thorben          ###   ########.fr       */
+/*   Updated: 2024/02/02 11:21:42 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct s_phil
 	struct s_vars	*vars;
 	pthread_t		t;
 	int				id;
-	int				eat_cnt;
+	unsigned int	eat_cnt;
 	int				eating;
 	unsigned int	left_to_live;
 	pthread_mutex_t	lock;
@@ -45,8 +45,8 @@ typedef struct s_vars
 	unsigned int	time_sleep;
 	unsigned int	eat_req;
 	__uint64_t		start_time;
-	int				dead;
-	int				done;
+	unsigned int	dead;
+	unsigned int	done;
 	int				in_check;
 	int				init_check;
 	t_phil			*phils;
@@ -55,12 +55,21 @@ typedef struct s_vars
 	pthread_mutex_t	*forks;
 }					t_vars;
 
+/* behaviour */
+
+// prints an adequate message for the philosophers's process
+void				phil_output(int event, t_phil *phil);
+// the philosopher picks up two forks, eats, drops the forks and sleeps
+void				eat(t_phil *phil);
+
 /* exit */
 
 // exits the program, providing an adequate error message and freeing memory
 void				ft_exit(t_vars *vars, int err);
 // prints an adequate error message
 void				ft_print_err(int err);
+// frees the alloc'd memory
+void				clean_vars_exit(t_vars *vars, int err);
 
 /* init */
 
@@ -85,12 +94,23 @@ void				ft_save_num(t_vars *vars, char *str, int i);
 	otherwise exits */
 long long int		ft_atoi_ll(t_vars *vars, const char *str);
 
+/* threads */
+
+// creates the threads, enters the loop and afterwards joins the threads again
+void				ft_threads(t_vars *vars);
+// tracks whether the prog has finished (either one phil died or all have eaten)
+void				*ft_track_finished(void *phil_data);
+// loop which is cycled until every phil has eaten or one has died
+void				*ft_loop(void *phil_data);
+// sets the tracking variables (eaten, dead, done)
+void				*ft_executive(void *phil_data);
+
 /* utils_write */
 
 // puts a char to the selected file descriptor
 void				ft_putchar_fd(char c, int fd);
 // puts a number to the selected file descriptor
-void				ft_putnbr_fd(long n, int fd);
+void				ft_putnbr_fd(unsigned long n, int fd);
 // puts a string to the selected file descriptor
 void				ft_putstr_fd(char *s, int fd);
 
@@ -109,6 +129,6 @@ void				*ft_calloc(size_t nmemb, size_t size);
 // gets the time (starting from 1970) in microseconds and returns it
 __uint64_t			get_time(void);
 // usleep that uses get_time for more accuracy
-int					ft_usleep(__suseconds_t microseconds);
+int					ft_usleep(__useconds_t milliseconds);
 
 #endif

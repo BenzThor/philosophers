@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thorben <thorben@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 14:52:41 by tbenz             #+#    #+#             */
-/*   Updated: 2024/01/31 11:19:27 by thorben          ###   ########.fr       */
+/*   Updated: 2024/02/02 11:21:21 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,15 @@ __uint64_t	get_time(void)
 
 	if (gettimeofday(&tv, NULL) == -1)
 		ft_putstr_fd("get_time() error\n", 2);
-	return (tv.tv_sec * 1000000LL + tv.tv_usec);
+	return ((tv.tv_sec * (__uint64_t)1000) + (tv.tv_usec / 1000));
 }
 
-int	ft_usleep(__suseconds_t microseconds)
+int	ft_usleep(__useconds_t milliseconds)
 {
 	__uint64_t	start;
 
 	start = get_time();
-	while (get_time - start < microseconds)
-		usleep(microseconds / 10);
+	while ((long long int)(get_time() - start) < milliseconds)
+		usleep(milliseconds / 10);
 	return (0);
 }

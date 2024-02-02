@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: thorben <thorben@student.42.fr>            +#+  +:+       +#+         #
+#    By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/01/31 09:54:18 by thorben          ###   ########.fr        #
+#    Updated: 2024/02/02 10:13:10 by tbenz            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,10 +33,12 @@ HEADER			= $(addprefix $(INC_DIR)/,\
 				philosophers.h)
 
 SRCS 			= $(addprefix $(SRCS_DIR)/,\
+					behaviour.c \
 					exit.c \
 					init.c \
 					input_check.c \
 					philosophers.c \
+					threads.c \
 					utils.c \
 					utils_write.c)
 

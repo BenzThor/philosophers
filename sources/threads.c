@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   threads.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thorben <thorben@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:21:30 by thorben           #+#    #+#             */
-/*   Updated: 2024/02/01 17:26:48 by thorben          ###   ########.fr       */
+/*   Updated: 2024/02/02 11:44:56 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philosophers.h"
 
-void	ft_track_finished(void *phil_data)
+void	*ft_track_finished(void *phil_data)
 {
 	t_phil	*phil;
 
@@ -26,9 +26,10 @@ void	ft_track_finished(void *phil_data)
 			phil->vars->dead = 1;
 		pthread_mutex_unlock(&phil->lock);
 	}
+	return ((void *)0);
 }
 
-void	ft_executive(void *phil_data)
+void	*ft_executive(void *phil_data)
 {
 	t_phil	*phil;
 
@@ -50,13 +51,13 @@ void	ft_executive(void *phil_data)
 	return ((void *)0);
 }
 
-void	ft_loop(void *phil_data)
+void	*ft_loop(void *phil_data)
 {
 	t_phil	*phil;
 
 	phil = (t_phil *)phil_data;
 	phil->left_to_live = phil->vars->time_die + get_time();
-	if (pthread_create(&phil->t, NULL, ft_executive, (void *)phil))
+	if (pthread_create(&phil->t, NULL, &ft_executive, (void *)phil))
 		ft_exit(phil->vars, THREAD_ERR);
 	while (!phil->vars->dead)
 	{
@@ -68,7 +69,7 @@ void	ft_loop(void *phil_data)
 	return ((void *)0);
 }
 
-void	ft_one_phil(t_vars *vars)
+/* void	ft_one_phil(t_vars *vars)
 {
 	vars->start_time = get_time();
 	if (pthread_create(&vars->tid[0], NULL, &ft_loop, &vars->phils[0]))
@@ -76,16 +77,16 @@ void	ft_one_phil(t_vars *vars)
 	if (pthread_join(vars->tid[0], NULL))
 		ft_exit(vars, JOIN_ERR);
 	ft_exit(vars, OK);
-}
+} */
 
 void	ft_threads(t_vars *vars)
 {
-	int			i;
-	pthread_t	monthr;
+	unsigned int	i;
+	pthread_t		monthr;
 
 	vars->start_time = get_time();
-	if (vars->phil_num == 1)
-		ft_one_phil(vars);
+	// if (vars->phil_num == 1)
+	// 	ft_one_phil(vars);
 	if (vars->eat_req > 0)
 	{
 		if (pthread_create(&monthr, NULL, &ft_track_finished, &vars->phils[0]))
@@ -98,7 +99,7 @@ void	ft_threads(t_vars *vars)
 			ft_exit(vars, THREAD_ERR);
 	}
 	i = -1;
-	while (i++ < vars->phil_num)
+	while (++i < vars->phil_num)
 	{
 		if (pthread_join(vars->tid[i], NULL))
 			ft_exit(vars, JOIN_ERR);

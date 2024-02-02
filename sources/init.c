@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thorben <thorben@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:19:12 by thorben           #+#    #+#             */
-/*   Updated: 2024/01/31 10:16:03 by thorben          ###   ########.fr       */
+/*   Updated: 2024/02/02 10:47:18 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	philsinit(t_vars *vars)
 	unsigned int	i;
 
 	i = -1;
-	while (i++ < vars->phil_num)
+	while (++i < vars->phil_num)
 	{
 		vars->phils[i].vars = vars;
 		vars->phils[i].id = i + 1;
