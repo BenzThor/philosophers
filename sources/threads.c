@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   threads.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
+/*   By: tbenz <tbenz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:21:30 by thorben           #+#    #+#             */
-/*   Updated: 2024/02/02 11:44:56 by tbenz            ###   ########.fr       */
+/*   Updated: 2024/02/20 15:38:10 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ void	*ft_track_finished(void *phil_data)
 	t_phil	*phil;
 
 	phil = (t_phil *)phil_data;
-	pthread_mutex_lock(&phil->vars->write);
-	// ft_putstr_fd("")
+	// pthread_mutex_lock(&phil->vars->write);
 	while (!phil->vars->dead)
 	{
 		pthread_mutex_lock(&phil->lock);
@@ -37,9 +36,7 @@ void	*ft_executive(void *phil_data)
 	while (phil->vars->dead)
 	{
 		pthread_mutex_lock(&phil->lock);
-		if (get_time() > phil->left_to_live && !phil->eating)
-			phil_output(DEAD, phil);
-		if (phil->eat_cnt == phil->vars->eat_req)
+		if (get_time() > phil->left_to_live)
 		{
 			pthread_mutex_lock(&phil->vars->meal);
 			phil->vars->done++;

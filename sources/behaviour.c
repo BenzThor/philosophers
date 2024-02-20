@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   behaviour.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
+/*   By: tbenz <tbenz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:40:08 by thorben           #+#    #+#             */
-/*   Updated: 2024/02/02 11:22:02 by tbenz            ###   ########.fr       */
+/*   Updated: 2024/02/20 15:38:13 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,28 +24,28 @@ void	phil_output(int event, t_phil *phil)
 	if (event == DEAD && !phil->vars->dead)
 	{
 		ft_putstr_fd(" died\n", 1);
-		// ft_putstr_fd(" has died 🪦\n", 1);
+		ft_putstr_fd(" has died 🪦\n", 1);
 		phil->vars->dead = 1;
 	}
 	else if (event == EATING && !phil->vars->dead)
 	{
 		ft_putstr_fd(" eating\n", 1);
-		// ft_putstr_fd(" is eating 🍝\n", 1);
+		ft_putstr_fd(" is eating 🍝\n", 1);
 	}
 	else if (event == THINKING && !phil->vars->dead)
 	{
 		ft_putstr_fd(" thinking\n", 1);
-		// ft_putstr_fd(" is thinking 🤯\n", 1);
+		ft_putstr_fd(" is thinking 🤯\n", 1);
 	}
 	else if (event == SLEEPING && !phil->vars->dead)
 	{
 		ft_putstr_fd(" sleeping\n", 1);
-		// ft_putstr_fd(" is sleeping 💤\n", 1);
+		ft_putstr_fd(" is sleeping 💤\n", 1);
 	}
 	else if (event == GRAB_FORKS && !phil->vars->dead)
 	{
 		ft_putstr_fd(" grabbed a fork\n", 1);
-		// ft_putstr_fd(" has grabbed a fork 🍴\n", 1);
+		ft_putstr_fd(" has grabbed a fork 🍴\n", 1);
 	}
 	pthread_mutex_unlock(&phil->vars->write);
 }
@@ -57,7 +57,6 @@ void	eat(t_phil *phil)
 	pthread_mutex_lock(phil->l_fork);
 	phil_output(GRAB_FORKS, phil);
 	pthread_mutex_lock(&phil->lock);
-	phil->eating = 1;
 	phil->left_to_live = get_time() + phil->vars->time_die;
 	phil_output(EATING, phil);
 	phil->eat_cnt++;
