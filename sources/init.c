@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
+/*   By: thorben <thorben@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:19:12 by thorben           #+#    #+#             */
-/*   Updated: 2024/02/02 10:47:18 by tbenz            ###   ########.fr       */
+/*   Updated: 2024/02/27 13:27:42 by thorben          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	mallocate(t_vars *vars)
 	vars->forks = calloc(vars->phil_num, sizeof(pthread_mutex_t));
 	vars->phils = calloc(vars->phil_num, sizeof(t_phil));
 	if (!vars->tid || !vars->forks || !vars->phils)
-		ft_exit(vars, MALLOC_ERR);
+		ft_error(vars, MALLOC_ERR);
 }
 
 void	ft_init(t_vars *vars)

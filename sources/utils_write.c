@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_write.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbenz <tbenz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thorben <thorben@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 17:01:47 by tbenz             #+#    #+#             */
-/*   Updated: 2024/02/20 14:48:36 by tbenz            ###   ########.fr       */
+/*   Updated: 2024/02/27 12:53:36 by thorben          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,6 @@ void	ft_putchar_fd(char c, int fd)
 void	ft_putnbr_fd(__uint64_t n, int fd)
 {
 	// ft_printf("%d", n);
-	if (n < 0)
-	{
-		ft_putchar_fd('-', fd);
-		n *= -1;
-	}
 	if (n > 9)
 	{
 		ft_putnbr_fd(n / 10, fd);

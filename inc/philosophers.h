@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
+/*   By: thorben <thorben@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 14:50:22 by tbenz             #+#    #+#             */
-/*   Updated: 2024/02/02 11:21:42 by tbenz            ###   ########.fr       */
+/*   Updated: 2024/02/27 14:06:54 by thorben          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "macros_philosophers.h"
 # include <limits.h>
 # include <pthread.h>
+# include <stdio.h>
 # include <stdlib.h>
 # include <sys/time.h>
 # include <unistd.h>
@@ -47,6 +48,7 @@ typedef struct s_vars
 	__uint64_t		start_time;
 	unsigned int	dead;
 	unsigned int	done;
+	int				ec;
 	int				in_check;
 	int				init_check;
 	t_phil			*phils;
@@ -62,14 +64,14 @@ void				phil_output(int event, t_phil *phil);
 // the philosopher picks up two forks, eats, drops the forks and sleeps
 void				eat(t_phil *phil);
 
-/* exit */
+/* error */
 
-// exits the program, providing an adequate error message and freeing memory
-void				ft_exit(t_vars *vars, int err);
+// provids an adequate error message and frees memory
+void				ft_error(t_vars *vars, int err);
 // prints an adequate error message
-void				ft_print_err(int err);
+void				ft_print_err(t_vars *vars, int err);
 // frees the alloc'd memory
-void				clean_vars_exit(t_vars *vars, int err);
+void				clean_vars(t_vars *vars);
 
 /* init */
 
@@ -91,7 +93,7 @@ void				ft_check_number(t_vars *vars, char *str);
 // saves the number given as input in the struct as parameters (max: uns. int)
 void				ft_save_num(t_vars *vars, char *str, int i);
 /* if possible, converts the input to long long int and returns it;
-	otherwise exits */
+	otherwise returns an error */
 long long int		ft_atoi_ll(t_vars *vars, const char *str);
 
 /* threads */
@@ -107,11 +109,11 @@ void				*ft_executive(void *phil_data);
 
 /* utils_write */
 
-// puts a char to the selected file descriptor
+// char to the selected file descriptor
 void				ft_putchar_fd(char c, int fd);
-// puts a number to the selected file descriptor
+// number to the selected file descriptor
 void				ft_putnbr_fd(unsigned long n, int fd);
-// puts a string to the selected file descriptor
+// string to the selected file descriptor
 void				ft_putstr_fd(char *s, int fd);
 
 /* utils */

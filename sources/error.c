@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thorben <thorben@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 15:08:40 by tbenz             #+#    #+#             */
-/*   Updated: 2024/02/01 17:27:57 by thorben          ###   ########.fr       */
+/*   Updated: 2024/02/27 13:39:04 by thorben          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philosophers.h"
 
-void	ft_print_err(int ec)
+void	ft_print_err(t_vars *vars, int ec)
 {
 	if (ec == ARGC_ERR)
 		ft_putstr_fd("Go, check your arguments\n", 2);
@@ -38,9 +38,10 @@ void	ft_print_err(int ec)
 	// 	ft_putstr_fd("There has been an error mallocing the forks\n", 2);
 	// else if (err == PHILS_ALL_ERR)
 	// 	ft_putstr_fd("There has been an error mallocing the philosophers\n", 2);
+	vars->ec = ec;
 }
 
-void	clean_vars_exit(t_vars *vars, int err)
+void	clean_vars(t_vars *vars)
 {
 	if (vars->tid)
 		free(vars->tid);
@@ -48,18 +49,19 @@ void	clean_vars_exit(t_vars *vars, int err)
 		free(vars->forks);
 	if (vars->phils)
 		free(vars->phils);
-	exit(err);
 }
 
-void	ft_exit(t_vars *vars, int ec)
+void	ft_error(t_vars *vars, int ec)
 {
 	unsigned int	i;
 
 	if (ec)
-		ft_print_err(ec);
+		ft_print_err(vars, ec);
 	if (ec != OK && ec != THREAD_ERR && ec != JOIN_ERR)
-		clean_vars_exit(vars, ec);
-	// exit(ec);
+	{
+		clean_vars(vars);
+		return ;
+	}
 	if (vars->in_check)
 	{
 		pthread_mutex_destroy(&vars->meal);
@@ -74,5 +76,5 @@ void	ft_exit(t_vars *vars, int ec)
 			}
 		}
 	}
-	clean_vars_exit(vars, ec);
+	clean_vars(vars);
 }

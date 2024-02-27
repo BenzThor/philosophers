@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   threads.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbenz <tbenz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thorben <thorben@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:21:30 by thorben           #+#    #+#             */
-/*   Updated: 2024/02/20 15:38:10 by tbenz            ###   ########.fr       */
+/*   Updated: 2024/02/27 13:41:53 by thorben          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,31 +55,21 @@ void	*ft_loop(void *phil_data)
 	phil = (t_phil *)phil_data;
 	phil->left_to_live = phil->vars->time_die + get_time();
 	if (pthread_create(&phil->t, NULL, &ft_executive, (void *)phil))
-		ft_exit(phil->vars, THREAD_ERR);
+		ft_error(phil->vars, THREAD_ERR);
 	while (!phil->vars->dead)
 	{
 		eat(phil);
 		phil_output(THINKING, phil);
 	}
 	if (pthread_join(phil->t, NULL))
-		ft_exit(phil->vars, THREAD_ERR);
+		ft_error(phil->vars, THREAD_ERR);
 	return ((void *)0);
 }
 
-/* void	ft_one_phil(t_vars *vars)
-{
-	vars->start_time = get_time();
-	if (pthread_create(&vars->tid[0], NULL, &ft_loop, &vars->phils[0]))
-		ft_exit(vars, OK);
-	if (pthread_join(vars->tid[0], NULL))
-		ft_exit(vars, JOIN_ERR);
-	ft_exit(vars, OK);
-} */
-
 void	ft_threads(t_vars *vars)
 {
-	unsigned int	i;
 	pthread_t		monthr;
+	unsigned int	i;
 
 	vars->start_time = get_time();
 	// if (vars->phil_num == 1)
@@ -87,19 +77,19 @@ void	ft_threads(t_vars *vars)
 	if (vars->eat_req > 0)
 	{
 		if (pthread_create(&monthr, NULL, &ft_track_finished, &vars->phils[0]))
-			ft_exit(vars, THREAD_ERR);
+			ft_error(vars, THREAD_ERR);
 	}
 	i = -1;
 	while (++i < vars->phil_num)
 	{
 		if (pthread_create(&vars->tid[i], NULL, &ft_loop, &vars->phils[i]))
-			ft_exit(vars, THREAD_ERR);
+			ft_error(vars, THREAD_ERR);
 	}
 	i = -1;
 	while (++i < vars->phil_num)
 	{
 		if (pthread_join(vars->tid[i], NULL))
-			ft_exit(vars, JOIN_ERR);
+			ft_error(vars, JOIN_ERR);
 	}
-	ft_exit(vars, OK);
+	ft_error(vars, OK);
 }
