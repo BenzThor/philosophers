@@ -6,7 +6,7 @@
 /*   By: thorben <thorben@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:40:08 by thorben           #+#    #+#             */
-/*   Updated: 2024/02/27 13:19:09 by thorben          ###   ########.fr       */
+/*   Updated: 2024/02/27 18:15:32 by thorben          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	phil_output(int event, t_phil *phil)
 
 	pthread_mutex_lock(&phil->vars->write);
 	time = (get_time() - phil->vars->start_time);
-	printf("%lu %d", time, phil->id);
+	printf("%llu ms %d", (unsigned long long)time, phil->id);
 	if (event == DEAD && !phil->vars->dead)
 	{
 		printf(" has died 🪦\n");

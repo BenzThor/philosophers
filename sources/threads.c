@@ -6,7 +6,7 @@
 /*   By: thorben <thorben@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:21:30 by thorben           #+#    #+#             */
-/*   Updated: 2024/02/27 13:41:53 by thorben          ###   ########.fr       */
+/*   Updated: 2024/02/27 18:22:04 by thorben          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	*ft_track_finished(void *phil_data)
 	t_phil	*phil;
 
 	phil = (t_phil *)phil_data;
-	// pthread_mutex_lock(&phil->vars->write);
 	while (!phil->vars->dead)
 	{
 		pthread_mutex_lock(&phil->lock);
@@ -77,19 +76,28 @@ void	ft_threads(t_vars *vars)
 	if (vars->eat_req > 0)
 	{
 		if (pthread_create(&monthr, NULL, &ft_track_finished, &vars->phils[0]))
+		{
 			ft_error(vars, THREAD_ERR);
+			return ;
+		}
 	}
 	i = -1;
 	while (++i < vars->phil_num)
 	{
 		if (pthread_create(&vars->tid[i], NULL, &ft_loop, &vars->phils[i]))
+		{
 			ft_error(vars, THREAD_ERR);
+			return ;
+		}
 	}
 	i = -1;
 	while (++i < vars->phil_num)
 	{
 		if (pthread_join(vars->tid[i], NULL))
+		{
 			ft_error(vars, JOIN_ERR);
+			return ;
+		}
 	}
 	ft_error(vars, OK);
 }

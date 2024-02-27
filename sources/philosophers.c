@@ -6,7 +6,7 @@
 /*   By: thorben <thorben@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 15:02:48 by tbenz             #+#    #+#             */
-/*   Updated: 2024/02/27 14:00:09 by thorben          ###   ########.fr       */
+/*   Updated: 2024/02/27 14:13:13 by thorben          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	main(int argc, char **argv)
 
 	ft_bzero(&vars, sizeof(t_vars));
 	ft_arg_check(&vars, argc, argv);
-	ft_init(&vars);
-	ft_threads(&vars);
+	if (!vars.ec)
+		ft_init(&vars);
+	if (!vars.ec)
+		ft_threads(&vars);
 }

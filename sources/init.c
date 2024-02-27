@@ -6,7 +6,7 @@
 /*   By: thorben <thorben@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:19:12 by thorben           #+#    #+#             */
-/*   Updated: 2024/02/27 13:27:42 by thorben          ###   ########.fr       */
+/*   Updated: 2024/02/27 14:15:11 by thorben          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,11 @@ void	ft_init(t_vars *vars)
 {
 	pthread_mutex_init(&vars->write, NULL);
 	pthread_mutex_init(&vars->meal, NULL);
-	mallocate(vars);
-	forkinit(vars);
-	philsinit(vars);
+	if (!vars->ec)
+		mallocate(vars);
+	if (!vars->ec)
+		forkinit(vars);
+	if (!vars->ec)
+		philsinit(vars);
 	vars->init_check = 1;
 }
