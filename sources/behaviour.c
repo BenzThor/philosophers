@@ -6,7 +6,7 @@
 /*   By: thorben <thorben@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:40:08 by thorben           #+#    #+#             */
-/*   Updated: 2024/02/27 18:15:32 by thorben          ###   ########.fr       */
+/*   Updated: 2024/02/28 13:22:48 by thorben          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,21 +35,28 @@ void	phil_output(int event, t_phil *phil)
 	pthread_mutex_unlock(&phil->vars->write);
 }
 
-void	eat(t_phil *phil)
+void	grab_forks(t_phil *philo)
 {
-	pthread_mutex_lock(phil->r_fork);
-	phil_output(GRAB_FORKS, phil);
-	pthread_mutex_lock(phil->l_fork);
-	phil_output(GRAB_FORKS, phil);
-	pthread_mutex_lock(&phil->lock);
-	phil->left_to_live = get_time() + phil->vars->time_die;
-	phil_output(EATING, phil);
-	phil->eat_cnt++;
-	ft_usleep(phil->vars->time_eat);
-	phil->eating = 0;
-	pthread_mutex_unlock(&phil->lock);
-	pthread_mutex_unlock(phil->r_fork);
-	pthread_mutex_unlock(phil->l_fork);
-	phil_output(SLEEPING, phil);
-	ft_usleep(phil->vars->time_sleep);
+	pthread_mutex_lock(philo->r_fork);
+	phil_output(GRAB_FORKS, philo);
+	pthread_mutex_lock(philo->l_fork);
+	phil_output(GRAB_FORKS, philo);
+}
+
+void	let_go_forks(t_phil *philo)
+{
+	pthread_mutex_unlock(philo->l_fork);
+	pthread_mutex_unlock(philo->r_fork);
+}
+
+void	eat(t_phil *philo)
+{
+	grab_forks(philo);
+	pthread_mutex_lock(&philo->vars->meal);
+	philo->left_to_live = get_time() + philo->vars->time_die;
+	phil_output(EATING, philo);
+	pthread_mutex_unlock(&philo->vars->meal);
+	philo->eat_cnt++;
+	ft_usleep(philo->vars->time_eat);
+	let_go_forks(philo);
 }

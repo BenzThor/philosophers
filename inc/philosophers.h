@@ -6,7 +6,7 @@
 /*   By: thorben <thorben@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 14:50:22 by tbenz             #+#    #+#             */
-/*   Updated: 2024/02/27 18:09:18 by thorben          ###   ########.fr       */
+/*   Updated: 2024/02/27 20:42:49 by thorben          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct s_phil
 	int				id;
 	unsigned int	eat_cnt;
 	int				eating;
-	unsigned int	left_to_live;
+	unsigned long long	left_to_live;
 	pthread_mutex_t	lock;
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	*l_fork;
@@ -44,10 +44,10 @@ typedef struct s_vars
 	unsigned int	time_die;
 	unsigned int	time_eat;
 	unsigned int	time_sleep;
-	unsigned int	eat_req;
+	int	eat_req;
 	__uint64_t		start_time;
 	unsigned int	dead;
-	unsigned int	done;
+	unsigned int	finished_eating;
 	int				ec;
 	int				in_check;
 	int				init_check;
@@ -104,7 +104,7 @@ void				ft_threads(t_vars *vars);
 void				*ft_track_finished(void *phil_data);
 // loop which is cycled until every phil has eaten or one has died
 void				*ft_loop(void *phil_data);
-// sets the tracking variables (eaten, dead, done)
+// sets the tracking variables (eaten, dead, finished_eating)
 void				*ft_executive(void *phil_data);
 
 /* utils_write */
