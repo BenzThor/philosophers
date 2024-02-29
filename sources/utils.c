@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thorben <thorben@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 14:52:41 by tbenz             #+#    #+#             */
-/*   Updated: 2024/02/27 18:07:21 by thorben          ###   ########.fr       */
+/*   Updated: 2024/02/29 18:23:55 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,24 @@ __uint64_t	get_time(void)
 	return ((tv.tv_sec * (__uint64_t)1000) + (tv.tv_usec / 1000));
 }
 
-int	ft_usleep(__useconds_t milliseconds)
+int	ft_usleep(__useconds_t milliseconds, t_vars *vars)
 {
 	__uint64_t	start;
 
 	start = get_time();
 	while ((long long int)(get_time() - start) < milliseconds)
-		usleep(milliseconds / 10);
+	{
+		pthread_mutex_lock(&vars->meal);
+		if (!vars->dead)
+		{
+			pthread_mutex_unlock(&vars->meal);
+			usleep(milliseconds / 10);
+		}
+		else
+		{
+			pthread_mutex_unlock(&vars->meal);
+			break;
+		}
+	}
 	return (0);
 }

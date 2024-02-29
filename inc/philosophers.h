@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thorben <thorben@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 14:50:22 by tbenz             #+#    #+#             */
-/*   Updated: 2024/02/27 20:42:49 by thorben          ###   ########.fr       */
+/*   Updated: 2024/02/29 18:14:21 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct s_phil
 {
 	struct s_vars	*vars;
 	pthread_t		t;
-	int				id;
+	unsigned int	id;
 	unsigned int	eat_cnt;
 	int				eating;
 	unsigned long long	left_to_live;
@@ -131,6 +131,6 @@ void				*ft_calloc(size_t nmemb, size_t size);
 // gets the time (starting from 1970) in microseconds and returns it
 __uint64_t			get_time(void);
 // usleep that uses get_time for more accuracy
-int					ft_usleep(__useconds_t milliseconds);
+int					ft_usleep(__useconds_t milliseconds, t_vars *vars);
 
 #endif
