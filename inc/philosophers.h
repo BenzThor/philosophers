@@ -6,7 +6,7 @@
 /*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 14:50:22 by tbenz             #+#    #+#             */
-/*   Updated: 2024/02/29 18:14:21 by tbenz            ###   ########.fr       */
+/*   Updated: 2024/03/04 11:33:36 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,13 @@ typedef struct s_vars
 	unsigned int	time_sleep;
 	int	eat_req;
 	__uint64_t		start_time;
-	unsigned int	dead;
+	unsigned int	finished;
 	unsigned int	finished_eating;
 	int				ec;
 	int				in_check;
 	int				init_check;
 	t_phil			*phils;
-	pthread_mutex_t	meal;
+	pthread_mutex_t	dead;
 	pthread_mutex_t	write;
 	pthread_mutex_t	*forks;
 }					t_vars;
@@ -98,6 +98,8 @@ long long int		ft_atoi_ll(t_vars *vars, const char *str);
 
 /* threads */
 
+// tests whether the program already died and otherwise outputs behaviour
+void 				test_dead_output(t_vars *vars, t_phil *phil, int behaviour);
 // creates the threads, enters the loop and afterwards joins the threads again
 void				ft_threads(t_vars *vars);
 // tracks whether the prog has finished (either one phil died or all have eaten)

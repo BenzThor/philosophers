@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thorben <thorben@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 15:08:40 by tbenz             #+#    #+#             */
-/*   Updated: 2024/02/27 13:39:04 by thorben          ###   ########.fr       */
+/*   Updated: 2024/03/04 11:13:46 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	ft_error(t_vars *vars, int ec)
 	}
 	if (vars->in_check)
 	{
-		pthread_mutex_destroy(&vars->meal);
+		pthread_mutex_destroy(&vars->dead);
 		pthread_mutex_destroy(&vars->write);
 		if (vars->init_check)
 		{

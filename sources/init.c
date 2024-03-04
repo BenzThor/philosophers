@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thorben <thorben@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:19:12 by thorben           #+#    #+#             */
-/*   Updated: 2024/02/28 13:21:34 by thorben          ###   ########.fr       */
+/*   Updated: 2024/03/04 11:13:53 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	mallocate(t_vars *vars)
 void	ft_init(t_vars *vars)
 {
 	pthread_mutex_init(&vars->write, NULL);
-	pthread_mutex_init(&vars->meal, NULL);
+	pthread_mutex_init(&vars->dead, NULL);
 	if (!vars->ec)
 		mallocate(vars);
 	if (!vars->ec)

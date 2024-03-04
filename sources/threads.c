@@ -6,11 +6,23 @@
 /*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:21:30 by thorben           #+#    #+#             */
-/*   Updated: 2024/02/29 19:16:22 by tbenz            ###   ########.fr       */
+/*   Updated: 2024/03/04 11:32:06 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philosophers.h"
+
+void	test_dead_output(t_vars *vars, t_phil *phil, int behaviour)
+{
+	pthread_mutex_lock(&vars->dead);
+	if (!vars->finished)
+	{
+		pthread_mutex_unlock(&vars->dead);
+		phil_output(behaviour, phil);
+	}
+	else
+		pthread_mutex_unlock(&vars->dead);
+}
 
 void	check_death(t_vars *vars, t_phil *phil)
 {
@@ -19,19 +31,19 @@ void	check_death(t_vars *vars, t_phil *phil)
 	while (!vars->finished_eating)
 	{
 		i = -1;
-		pthread_mutex_lock(&vars->meal);
-		while (++i < (int)vars->phil_num && !vars->dead)
+		pthread_mutex_lock(&vars->dead);
+		while (++i < (int)vars->phil_num && !vars->finished)
 		{
-			pthread_mutex_unlock(&vars->meal);
+			pthread_mutex_unlock(&vars->dead);
 			pthread_mutex_lock(&vars->phils[i].lock);
 			if (phil[i].left_to_live < get_time())
 				phil_output(DEAD, &vars->phils[i]);
 			pthread_mutex_unlock(&vars->phils[i].lock);
 			usleep(100);
-			pthread_mutex_lock(&vars->meal);
+			pthread_mutex_lock(&vars->dead);
 		}
-		pthread_mutex_unlock(&vars->meal);
-		if (vars->dead)
+		pthread_mutex_unlock(&vars->dead);
+		if (vars->finished)
 			break ;
 		i = 0;
 		while (vars->eat_req != -1 && i < (int)vars->phil_num
@@ -47,34 +59,25 @@ void	*ft_loop(void *phil_data)
 	t_phil	*phil;
 
 	phil = (t_phil *)phil_data;
-	// if (phil->id % 2)
-	// 	usleep (15000);
-	pthread_mutex_lock(&phil->vars->meal);
-	while (!phil->vars->dead)
+	if (phil->id % 2 == 0)
+		ft_usleep(phil->vars->time_eat / 2, phil->vars);
+	pthread_mutex_lock(&phil->vars->dead);
+	while (!phil->vars->finished)
 	{
-		pthread_mutex_unlock(&phil->vars->meal);
+		pthread_mutex_unlock(&phil->vars->dead);
 		if (phil->id % 2 && phil->id == phil->vars->phil_num)
 			ft_usleep(phil->vars->time_eat + 100, phil->vars);
 		eat(phil);
 		if (phil->vars->finished_eating)
 			break ;
-		pthread_mutex_lock(&phil->vars->meal);
-		if (!phil->vars->dead)
-		{
-			pthread_mutex_unlock(&phil->vars->meal);
-			phil_output(SLEEPING, phil);
-		}
+		test_dead_output(phil->vars, phil, SLEEPING);
 		ft_usleep(phil->vars->time_sleep, phil->vars);
-		pthread_mutex_lock(&phil->vars->meal);
-		if (!phil->vars->dead)
-		{
-			pthread_mutex_unlock(&phil->vars->meal);
-			phil_output(THINKING, phil);
-		}
-		ft_usleep(100, phil->vars);
-		pthread_mutex_lock(&phil->vars->meal);
+		test_dead_output(phil->vars, phil, THINKING);
+		if (phil->id % 2 && phil->id != phil->vars->phil_num)
+			ft_usleep(phil->vars->time_eat + 100, phil->vars);
+		pthread_mutex_lock(&phil->vars->dead);
 	}
-	pthread_mutex_unlock(&phil->vars->meal);
+	pthread_mutex_unlock(&phil->vars->dead);
 	return ((void *)0);
 }
 
