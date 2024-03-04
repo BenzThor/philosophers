@@ -6,7 +6,7 @@
 /*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:21:30 by thorben           #+#    #+#             */
-/*   Updated: 2024/03/04 11:32:06 by tbenz            ###   ########.fr       */
+/*   Updated: 2024/03/04 12:03:45 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,16 +65,16 @@ void	*ft_loop(void *phil_data)
 	while (!phil->vars->finished)
 	{
 		pthread_mutex_unlock(&phil->vars->dead);
-		if (phil->id % 2 && phil->id == phil->vars->phil_num)
-			ft_usleep(phil->vars->time_eat + 100, phil->vars);
+		if (phil->vars->phil_num % 2 && phil->id == phil->vars->phil_num)
+			ft_usleep(phil->vars->time_eat + 1, phil->vars);
 		eat(phil);
 		if (phil->vars->finished_eating)
 			break ;
 		test_dead_output(phil->vars, phil, SLEEPING);
 		ft_usleep(phil->vars->time_sleep, phil->vars);
 		test_dead_output(phil->vars, phil, THINKING);
-		if (phil->id % 2 && phil->id != phil->vars->phil_num)
-			ft_usleep(phil->vars->time_eat + 100, phil->vars);
+		if (phil->vars->phil_num % 2 && phil->id != phil->vars->phil_num)
+			ft_usleep(phil->vars->time_eat + 1, phil->vars);
 		pthread_mutex_lock(&phil->vars->dead);
 	}
 	pthread_mutex_unlock(&phil->vars->dead);

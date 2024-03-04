@@ -6,7 +6,7 @@
 /*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:40:08 by thorben           #+#    #+#             */
-/*   Updated: 2024/03/04 11:35:35 by tbenz            ###   ########.fr       */
+/*   Updated: 2024/03/04 16:18:55 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,25 @@
 
 void	phil_output(int event, t_phil *phil)
 {
-	__uint64_t	time;
+	unsigned long long int	time;
 
 	pthread_mutex_lock(&phil->vars->write);
-	time = (get_time() - phil->vars->start_time);
-	printf("%llu %d", (unsigned long long)time, phil->id);
+	time = (unsigned long long)(get_time() - phil->vars->start_time);
 	if (event == DEAD && !phil->vars->finished)
 	{
-		printf(" died\n");
+		printf("%llu %d died\n", time, phil->id);
 		pthread_mutex_lock(&phil->vars->dead);
 		phil->vars->finished = 1;
 		pthread_mutex_unlock(&phil->vars->dead);
 	}
 	else if (event == EATING && !phil->vars->finished)
-		printf(" is eating\n");
+		printf("%llu %d is eating\n", time, phil->id);
 	else if (event == THINKING && !phil->vars->finished)
-		printf(" is thinking\n");
+		printf("%llu %d is thinking\n", time, phil->id);
 	else if (event == SLEEPING && !phil->vars->finished)
-		printf(" is sleeping\n");
+		printf("%llu %d is sleeping\n", time, phil->id);
 	else if (event == GRAB_FORKS && !phil->vars->finished)
-		printf(" has taken a fork\n");
+		printf("%llu %d has taken a fork\n", time, phil->id);
 	pthread_mutex_unlock(&phil->vars->write);
 }
 
