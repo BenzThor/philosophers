@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   macros_philosophers.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thorben <thorben@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:52:29 by bpochlau          #+#    #+#             */
-/*   Updated: 2024/02/01 16:19:19 by thorben          ###   ########.fr       */
+/*   Updated: 2024/03/06 17:33:59 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,6 @@
 # define PHIL_ERR 1300
 # define EXC_ERR 1400
 # define NEG_ERR 1500
-// # define TID_ALL_ERR 1600
-// # define FORK_ALL_ERR 1700
-// # define PHILS_ALL_ERR 1800
 # define THREAD_ERR 1900
 # define JOIN_ERR 2000
 

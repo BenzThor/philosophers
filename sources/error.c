@@ -6,7 +6,7 @@
 /*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 15:08:40 by tbenz             #+#    #+#             */
-/*   Updated: 2024/03/06 17:22:50 by tbenz            ###   ########.fr       */
+/*   Updated: 2024/03/06 17:34:05 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,6 @@ void	ft_print_err(t_vars *vars, int ec)
 		ft_putstr_fd("An error occured while creating the threads\n", 2);
 	else if (ec == JOIN_ERR)
 		ft_putstr_fd("An error occured while joining the threads\n", 2);
-	else if (err == TID_ALL_ERR)
-		ft_putstr_fd("There has been an error mallocing the threads\n", 2);
-	else if (err == FORK_ALL_ERR)
-		ft_putstr_fd("There has been an error mallocing the forks\n", 2);
-	else if (err == PHILS_ALL_ERR)
-		ft_putstr_fd("There has been an error mallocing the philosophers\n", 2);
 	vars->ec = ec;
 }
 
