@@ -69,9 +69,6 @@ fclean:
 
 re:				fclean all
 
-test:			$(HEADER)
-				${CC} -g $(SRCS) -o ${NAME}
-
 valgrind:		$(NAME)
 				valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes \
 				--show-mismatched-frees=yes	--track-fds=yes ./${NAME}
