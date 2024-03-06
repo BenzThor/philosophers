@@ -6,7 +6,7 @@
 /*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 14:50:22 by tbenz             #+#    #+#             */
-/*   Updated: 2024/03/04 17:43:43 by tbenz            ###   ########.fr       */
+/*   Updated: 2024/03/06 17:26:41 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,16 @@
 // struct that stores then information of a single philosopher
 typedef struct s_phil
 {
-	struct s_vars	*vars;
-	pthread_t		t;
-	unsigned int	id;
-	unsigned int	eat_cnt;
-	int				eating;
+	struct s_vars		*vars;
+	pthread_t			t;
+	unsigned int		id;
+	unsigned int		eat_cnt;
+	int					eating;
 	unsigned long long	left_to_live;
-	pthread_mutex_t	lock;
-	pthread_mutex_t	*r_fork;
-	pthread_mutex_t	*l_fork;
-}					t_phil;
+	pthread_mutex_t		lock;
+	pthread_mutex_t		*r_fork;
+	pthread_mutex_t		*l_fork;
+}				t_phil;
 
 // struct that stores all the main information
 typedef struct s_vars
@@ -44,7 +44,7 @@ typedef struct s_vars
 	unsigned int	time_die;
 	unsigned int	time_eat;
 	unsigned int	time_sleep;
-	int	eat_req;
+	int				eat_req;
 	__uint64_t		start_time;
 	unsigned int	finished;
 	unsigned int	finished_eating;
@@ -55,7 +55,7 @@ typedef struct s_vars
 	pthread_mutex_t	dead;
 	pthread_mutex_t	write;
 	pthread_mutex_t	*forks;
-}					t_vars;
+}				t_vars;
 
 /* behaviour */
 
@@ -99,7 +99,7 @@ long long int		ft_atoi_ll(t_vars *vars, const char *str);
 /* threads */
 
 // tests whether the program already died and otherwise outputs behaviour
-void 				test_dead_output(t_vars *vars, t_phil *phil, int behaviour);
+void				test_dead_output(t_vars *vars, t_phil *phil, int behaviour);
 // creates the threads, enters the loop and afterwards joins the threads again
 void				ft_threads(t_vars *vars);
 // tracks whether the prog has finished (either one phil died or all have eaten)

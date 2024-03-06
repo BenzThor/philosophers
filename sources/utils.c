@@ -6,7 +6,7 @@
 /*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 14:52:41 by tbenz             #+#    #+#             */
-/*   Updated: 2024/03/06 17:01:28 by tbenz            ###   ########.fr       */
+/*   Updated: 2024/03/06 17:23:53 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,12 @@ int	ft_usleep(__useconds_t milliseconds, t_vars *vars)
 		if (!vars->finished)
 		{
 			pthread_mutex_unlock(&vars->dead);
-			if (usleep(milliseconds / 10) == -1)
-				return (-1);
+			usleep(milliseconds / 10);
 		}
 		else
 		{
 			pthread_mutex_unlock(&vars->dead);
-			break;
+			break ;
 		}
 	}
 	return (0);
