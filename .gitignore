@@ -3,10 +3,11 @@ a.out
 *.a
 *.d
 *.h.*
-philosophers
+philo
 .vscode
 *.h.gch
 .nfs*
 test*
 tmp*
 *.pdf
+42-philosophers-tester

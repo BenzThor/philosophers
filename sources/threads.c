@@ -6,7 +6,7 @@
 /*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:21:30 by thorben           #+#    #+#             */
-/*   Updated: 2024/03/04 12:03:45 by tbenz            ###   ########.fr       */
+/*   Updated: 2024/03/04 17:40:57 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,11 @@ void	check_death(t_vars *vars, t_phil *phil)
 			&& (int)phil[i].eat_cnt >= vars->eat_req)
 			i++;
 		if (i == (int)vars->phil_num)
+		{
+			pthread_mutex_lock(&phil->vars->dead);
 			vars->finished_eating = 1;
+			pthread_mutex_unlock(&phil->vars->dead);
+		}
 	}
 }
 
@@ -68,8 +72,10 @@ void	*ft_loop(void *phil_data)
 		if (phil->vars->phil_num % 2 && phil->id == phil->vars->phil_num)
 			ft_usleep(phil->vars->time_eat + 1, phil->vars);
 		eat(phil);
+		pthread_mutex_lock(&phil->vars->dead);
 		if (phil->vars->finished_eating)
 			break ;
+		pthread_mutex_unlock(&phil->vars->dead);
 		test_dead_output(phil->vars, phil, SLEEPING);
 		ft_usleep(phil->vars->time_sleep, phil->vars);
 		test_dead_output(phil->vars, phil, THINKING);

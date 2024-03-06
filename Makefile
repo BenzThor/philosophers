@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: thorben <thorben@student.42.fr>            +#+  +:+       +#+         #
+#    By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/02/27 13:28:03 by thorben          ###   ########.fr        #
+#    Updated: 2024/03/06 13:41:31 by tbenz            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ RESET			= \033[0m
 
 CC 				= cc
 
-CFLAGS 			= -Wall -Werror -Wextra -g
+CFLAGS 			= -Wall -Werror -Wextra -pthread -g
 
 REMOVE 			= rm -f
 REMOVE_DIR		= rm -rf
