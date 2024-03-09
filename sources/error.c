@@ -6,7 +6,7 @@
 /*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 15:08:40 by tbenz             #+#    #+#             */
-/*   Updated: 2024/03/06 17:34:05 by tbenz            ###   ########.fr       */
+/*   Updated: 2024/03/09 13:34:43 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,15 @@
 
 void	ft_print_err(t_vars *vars, int ec)
 {
-	if (ec == ARGC_ERR)
-		ft_putstr_fd("Go, check your arguments\n", 2);
+	if (ec == ARGC1_ERR)
+		ft_putstr_fd("You didn't put all the required arguments\n", 2);
+	else if (ec == ARGC2_ERR)
+		ft_putstr_fd("You put too many arguments\n", 2);
 	else if (ec == MALLOC_ERR)
 		ft_putstr_fd("There has been a malloc error\n", 2);
 	else if (ec == NUM_ERR)
-		ft_putstr_fd("You should put digits or one + sign at the start\n", 2);
+		ft_putstr_fd("You should put digits only (additional + sign " \
+			"at the start is allowed)\n", 2);
 	else if (ec == EXC_ERR)
 	{
 		ft_putstr_fd("One of your numbers is too long. The maximum is ", 2);

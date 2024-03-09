@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thorben <thorben@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 15:06:31 by tbenz             #+#    #+#             */
-/*   Updated: 2024/02/27 13:59:58 by thorben          ###   ########.fr       */
+/*   Updated: 2024/03/09 13:00:41 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,10 @@ void	ft_check_number(t_vars *vars, char *str)
 	while (*str)
 	{
 		if (*str < '0' || *str > '9')
+		{
 			ft_error(vars, NUM_ERR);
+			break ;
+		}
 		str++;
 	}
 }
@@ -83,16 +86,23 @@ void	ft_arg_check(t_vars *vars, int argc, char **argv)
 {
 	int	i;
 
-	if (argc > 6 || argc < 5)
-		ft_error(vars, ARGC_ERR);
+	if (argc < 5 || argc > 6)
+	{
+		if (argc < 5)
+			ft_error(vars, ARGC1_ERR);
+		else if (argc > 6)
+			ft_error(vars, ARGC2_ERR);
+		return ;
+	}
 	i = 1;
-	while (argv && argv[i])
+	while (argv && argv[i] && !vars->ec)
 	{
 		ft_check_number(vars, argv[i]);
-		ft_save_num(vars, argv[i], i);
+		if (!vars->ec)
+			ft_save_num(vars, argv[i], i);
 		i++;
 	}
-	if (argc == 5)
+	if (argc == 5 && !vars->ec)
 		vars->eat_req = -1;
 	vars->in_check = 1;
 }
