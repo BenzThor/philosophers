@@ -6,7 +6,7 @@
 /*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:21:30 by thorben           #+#    #+#             */
-/*   Updated: 2024/03/11 17:13:39 by tbenz            ###   ########.fr       */
+/*   Updated: 2024/03/11 17:20:11 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ void	ft_threads(t_vars *vars)
 			return ;
 		if (pthread_create(&vars->tid[i], NULL, &ft_loop, &vars->phils[i]))
 		{
-			ft_putstr_fd("An error occured while creating the threads\n", 2);
+			ft_putstr_fd("An error occurred while creating the threads", 2);
 			vars->finished = 1;
 			vars->phil_num = i;
 			break ;
