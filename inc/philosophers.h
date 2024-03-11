@@ -6,7 +6,7 @@
 /*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 14:50:22 by tbenz             #+#    #+#             */
-/*   Updated: 2024/03/09 13:34:11 by tbenz            ###   ########.fr       */
+/*   Updated: 2024/03/11 13:38:28 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,8 +131,10 @@ size_t				ft_strlen(const char *s);
 	value that can later be successfully passed to free().  */
 void				*ft_calloc(size_t nmemb, size_t size);
 // gets the time (starting from 1970) in microseconds and returns it
-__uint64_t			get_time(void);
+__uint64_t			get_time(t_vars *vars, int *ec);
 // usleep that uses get_time for more accuracy
 int					ft_usleep(__useconds_t milliseconds, t_vars *vars);
+
+int 				phil_died(t_vars *vars);
 
 #endif
