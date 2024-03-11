@@ -6,7 +6,7 @@
 /*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:40:08 by thorben           #+#    #+#             */
-/*   Updated: 2024/03/11 13:49:52 by tbenz            ###   ########.fr       */
+/*   Updated: 2024/03/11 16:53:30 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,23 @@
 void	phil_output(int event, t_phil *phil)
 {
 	unsigned long long int	time;
-	int 					ec;
+	int						ec;
 
 	pthread_mutex_lock(&phil->vars->write);
-	time = (unsigned long long)(get_time(phil->vars, &ec) - phil->vars->start_time);
-	if (event == DEAD && !phil_died(phil->vars))
+	time = (unsigned long long)(get_time(phil->vars, &ec) - \
+	phil->vars->start_time);
+	if (event == DEAD && !phil_died(phil->vars, 0))
 	{
 		printf("%llu %d died\n", time, phil->id);
-		pthread_mutex_lock(&phil->vars->dead);
-		phil->vars->finished = 1;
-		pthread_mutex_unlock(&phil->vars->dead);
+		phil_died(phil->vars, 1);
 	}
-	else if (event == EATING && !phil_died(phil->vars))
+	else if (event == EATING && !phil_died(phil->vars, 0))
 		printf("%llu %d is eating\n", time, phil->id);
-	else if (event == THINKING && !phil_died(phil->vars))
+	else if (event == THINKING && !phil_died(phil->vars, 0))
 		printf("%llu %d is thinking\n", time, phil->id);
-	else if (event == SLEEPING && !phil_died(phil->vars))
+	else if (event == SLEEPING && !phil_died(phil->vars, 0))
 		printf("%llu %d is sleeping\n", time, phil->id);
-	else if (event == GRAB_FORKS && !phil_died(phil->vars))
+	else if (event == GRAB_FORKS && !phil_died(phil->vars, 0))
 		printf("%llu %d has taken a fork\n", time, phil->id);
 	pthread_mutex_unlock(&phil->vars->write);
 }
@@ -63,22 +62,20 @@ void	let_go_forks(t_phil *philo)
 
 void	eat(t_phil *philo)
 {
-	int ec;
+	int	ec;
 
 	grab_forks(philo);
 	pthread_mutex_lock(&philo->lock);
 	philo->left_to_live = get_time(philo->vars, &ec) + philo->vars->time_die;
 	if (ec)
 	{
-		pthread_mutex_lock(&philo->vars->dead);
-		philo->vars->finished = 1;
-		pthread_mutex_unlock(&philo->vars->dead);
+		phil_died(philo->vars, 1);
 		pthread_mutex_unlock(&philo->lock);
 		return ;
 	}
 	test_dead_output(philo->vars, philo, EATING);
-	pthread_mutex_unlock(&philo->lock);
 	philo->eat_cnt++;
+	pthread_mutex_unlock(&philo->lock);
 	ft_usleep(philo->vars->time_eat, philo->vars);
 	let_go_forks(philo);
 }

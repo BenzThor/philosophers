@@ -6,7 +6,7 @@
 /*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 14:50:22 by tbenz             #+#    #+#             */
-/*   Updated: 2024/03/11 13:38:28 by tbenz            ###   ########.fr       */
+/*   Updated: 2024/03/11 16:56:46 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,8 @@ __uint64_t			get_time(t_vars *vars, int *ec);
 // usleep that uses get_time for more accuracy
 int					ft_usleep(__useconds_t milliseconds, t_vars *vars);
 
-int 				phil_died(t_vars *vars);
+/* if in mode 0 tests whether a philo has died and in mode 1 sets vars->finished
+	to 1 */
+int					phil_died(t_vars *vars, int mode);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 14:52:41 by tbenz             #+#    #+#             */
-/*   Updated: 2024/03/11 13:53:18 by tbenz            ###   ########.fr       */
+/*   Updated: 2024/03/11 16:53:54 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,10 @@ __uint64_t	get_time(t_vars *vars, int *ec)
 
 	if (gettimeofday(&tv, NULL) == -1)
 	{
-		pthread_mutex_lock(&vars->dead);
-		if (!vars->finished)
+		if (!phil_died(vars, 0))
 			ft_putstr_fd("get_time() error\n", 2);
-		vars->finished = 1;
+		phil_died(vars, 1);
 		*ec = -1;
-		pthread_mutex_unlock(&vars->dead);
 		return (1);
 	}
 	*ec = 0;
@@ -74,20 +72,18 @@ __uint64_t	get_time(t_vars *vars, int *ec)
 int	ft_usleep(__useconds_t milliseconds, t_vars *vars)
 {
 	__uint64_t	start;
-	int 		ec;
+	int			ec;
 
 	start = get_time(vars, &ec);
 	while (!ec && (long long int)(get_time(vars, &ec) - start) < milliseconds)
 	{
-		if (!phil_died(vars) && !ec)
+		if (!phil_died(vars, 0) && !ec)
 		{
 			if (usleep(100) == -1)
 			{
-				pthread_mutex_lock(&vars->dead);
-				if (!vars->finished)
+				if (phil_died(vars, 0))
 					ft_putstr_fd("usleep error\n", 2);
-				vars->finished = 1;
-				pthread_mutex_unlock(&vars->dead);
+				phil_died(vars, 1);
 				return (-1);
 			}
 		}
