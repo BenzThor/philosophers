@@ -6,7 +6,7 @@
 /*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:40:08 by thorben           #+#    #+#             */
-/*   Updated: 2024/03/11 16:53:30 by tbenz            ###   ########.fr       */
+/*   Updated: 2024/03/11 17:08:34 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ void	eat(t_phil *philo)
 	philo->left_to_live = get_time(philo->vars, &ec) + philo->vars->time_die;
 	if (ec)
 	{
-		phil_died(philo->vars, 1);
 		pthread_mutex_unlock(&philo->lock);
+		let_go_forks(philo);
 		return ;
 	}
 	test_dead_output(philo->vars, philo, EATING);

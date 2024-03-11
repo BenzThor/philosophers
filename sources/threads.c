@@ -6,7 +6,7 @@
 /*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:21:30 by thorben           #+#    #+#             */
-/*   Updated: 2024/03/11 16:54:54 by tbenz            ###   ########.fr       */
+/*   Updated: 2024/03/11 17:06:43 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	phil_died(t_vars *vars, int mode)
 {
 	pthread_mutex_lock(&vars->dead);
-	if (mode)
+	if (mode && !vars->finished)
 	{
 		vars->finished = 1;
 		pthread_mutex_unlock(&vars->dead);
