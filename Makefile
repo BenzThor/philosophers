@@ -6,7 +6,7 @@
 #    By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/03/06 13:41:31 by tbenz            ###   ########.fr        #
+#    Updated: 2024/03/12 10:13:18 by tbenz            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ HEADER			= $(addprefix $(INC_DIR)/,\
 
 SRCS 			= $(addprefix $(SRCS_DIR)/,\
 					behaviour.c \
+					checker.c \
 					error.c \
 					init.c \
 					input_check.c \

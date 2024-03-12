@@ -6,7 +6,7 @@
 /*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 14:50:22 by tbenz             #+#    #+#             */
-/*   Updated: 2024/03/11 16:56:46 by tbenz            ###   ########.fr       */
+/*   Updated: 2024/03/12 10:12:55 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,5 +138,6 @@ int					ft_usleep(__useconds_t milliseconds, t_vars *vars);
 /* if in mode 0 tests whether a philo has died and in mode 1 sets vars->finished
 	to 1 */
 int					phil_died(t_vars *vars, int mode);
+void				check_death(t_vars *vars, t_phil *phil);
 
 #endif

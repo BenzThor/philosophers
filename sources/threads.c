@@ -6,53 +6,11 @@
 /*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:21:30 by thorben           #+#    #+#             */
-/*   Updated: 2024/03/11 17:20:11 by tbenz            ###   ########.fr       */
+/*   Updated: 2024/03/12 10:29:20 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philosophers.h"
-
-int	phil_died(t_vars *vars, int mode)
-{
-	pthread_mutex_lock(&vars->dead);
-	if (mode && !vars->finished)
-	{
-		vars->finished = 1;
-		pthread_mutex_unlock(&vars->dead);
-		return (0);
-	}
-	if (!vars->finished)
-	{
-		pthread_mutex_unlock(&vars->dead);
-		return (0);
-	}
-	else
-	{
-		pthread_mutex_unlock(&vars->dead);
-		return (1);
-	}
-}
-
-void	test_dead_output(t_vars *vars, t_phil *phil, int behaviour)
-{
-	if (!phil_died(vars, 0))
-		phil_output(behaviour, phil);
-}
-
-int	phil_fed(t_phil *phil)
-{
-	pthread_mutex_lock(&phil->lock);
-	if ((int)phil->eat_cnt >= phil->vars->eat_req)
-	{
-		pthread_mutex_unlock(&phil->lock);
-		return (1);
-	}
-	else
-	{
-		pthread_mutex_unlock(&phil->lock);
-		return (0);
-	}
-}
 
 void	one_phil(t_vars *vars)
 {
@@ -63,30 +21,18 @@ void	one_phil(t_vars *vars)
 	phil_died(vars, 1);
 }
 
-void	check_death(t_vars *vars, t_phil *phil)
+void	join_threads(t_vars *vars)
 {
 	int	i;
-	int	ec;
 
-	while (!phil_died(vars, 0))
+	i = -1;
+	while (++i < (int)vars->phil_num)
 	{
-		i = -1;
-		while (++i < (int)vars->phil_num && !phil_died(vars, 0))
+		if (pthread_join(vars->tid[i], NULL))
 		{
-			pthread_mutex_lock(&vars->phils[i].lock);
-			if (phil[i].left_to_live < get_time(vars, &ec) && !ec)
-				phil_output(DEAD, &vars->phils[i]);
-			pthread_mutex_unlock(&vars->phils[i].lock);
-			usleep(100);
+			ft_error(vars, JOIN_ERR);
+			return ;
 		}
-		if (phil_died(vars, 0))
-			break ;
-		i = 0;
-		while (vars->eat_req != -1 && i < (int)vars->phil_num
-			&& phil_fed(&phil[i]))
-			i++;
-		if (i == (int)vars->phil_num)
-			phil_died(vars, 1);
 	}
 }
 
@@ -118,23 +64,16 @@ void	*ft_loop(void *phil_data)
 	return ((void *)0);
 }
 
-void	ft_threads(t_vars *vars)
+void	create_threads(t_vars *vars, int *ec)
 {
-	unsigned int	i;
-	int				ec;
+	int	i;
 
-	vars->start_time = get_time(vars, &ec);
-	if (ec)
-	{
-		ft_error(vars, NOT_DEFINED);
-		return ;
-	}
 	i = -1;
 	pthread_mutex_lock(&vars->dead);
-	while (++i < vars->phil_num)
+	while (++i < (int)vars->phil_num)
 	{
-		vars->phils[i].left_to_live = vars->time_die + get_time(vars, &ec);
-		if (ec)
+		vars->phils[i].left_to_live = vars->time_die + get_time(vars, ec);
+		if (*ec)
 			return ;
 		if (pthread_create(&vars->tid[i], NULL, &ft_loop, &vars->phils[i]))
 		{
@@ -145,15 +84,20 @@ void	ft_threads(t_vars *vars)
 		}
 	}
 	pthread_mutex_unlock(&vars->dead);
-	i = -1;
-	check_death(vars, vars->phils);
-	while (++i < vars->phil_num)
+}
+
+void	ft_threads(t_vars *vars)
+{
+	int				ec;
+
+	vars->start_time = get_time(vars, &ec);
+	if (ec)
 	{
-		if (pthread_join(vars->tid[i], NULL))
-		{
-			ft_error(vars, JOIN_ERR);
-			return ;
-		}
+		ft_error(vars, NOT_DEFINED);
+		return ;
 	}
+	create_threads(vars, &ec);
+	check_death(vars, vars->phils);
+	join_threads(vars);
 	ft_error(vars, OK);
 }
