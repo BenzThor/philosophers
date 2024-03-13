@@ -6,7 +6,7 @@
 /*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:21:30 by thorben           #+#    #+#             */
-/*   Updated: 2024/03/12 10:29:20 by tbenz            ###   ########.fr       */
+/*   Updated: 2024/03/13 13:44:44 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,10 @@ void	create_threads(t_vars *vars, int *ec)
 	{
 		vars->phils[i].left_to_live = vars->time_die + get_time(vars, ec);
 		if (*ec)
-			return ;
+		{
+			vars->phil_num = i - 1;
+			break ;
+		}
 		if (pthread_create(&vars->tid[i], NULL, &ft_loop, &vars->phils[i]))
 		{
 			ft_putstr_fd("An error occurred while creating the threads", 2);
