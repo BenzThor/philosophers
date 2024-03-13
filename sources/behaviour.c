@@ -6,7 +6,7 @@
 /*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:40:08 by thorben           #+#    #+#             */
-/*   Updated: 2024/03/13 13:48:15 by tbenz            ###   ########.fr       */
+/*   Updated: 2024/03/13 14:43:41 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	phil_output(int event, t_phil *phil)
 	int						ec;
 
 	pthread_mutex_lock(&phil->vars->write);
-	time = (unsigned long long)(get_time(phil->vars, &ec) - \
+	time = (unsigned long long)(get_time(phil->vars, &ec, 0) - \
 	phil->vars->start_time);
 	if (event == DEAD && !phil_died(phil->vars, 0))
 	{
@@ -66,7 +66,7 @@ void	eat(t_phil *philo)
 
 	grab_forks(philo);
 	pthread_mutex_lock(&philo->lock);
-	philo->left_to_live = get_time(philo->vars, &ec) + philo->vars->time_die;
+	philo->left_to_live = get_time(philo->vars, &ec, 0) + philo->vars->time_die;
 	if (ec)
 	{
 		pthread_mutex_unlock(&philo->lock);

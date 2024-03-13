@@ -6,7 +6,7 @@
 /*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 14:52:41 by tbenz             #+#    #+#             */
-/*   Updated: 2024/03/11 17:10:41 by tbenz            ###   ########.fr       */
+/*   Updated: 2024/03/13 14:48:14 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,29 +53,37 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	return (allspc);
 }
 
-__uint64_t	get_time(t_vars *vars, int *ec)
+__uint64_t	get_time(t_vars *vars, int *ec, int mode)
 {
 	struct timeval	tv;
 
 	if (gettimeofday(&tv, NULL) == -1)
 	{
-		if (!phil_died(vars, 0))
+		if (!mode && phil_died(vars, 0))
+		{
 			ft_putstr_fd("get_time() error\n", 2);
-		phil_died(vars, 1);
-		*ec = -1;
+			phil_died(vars, 1);
+			*ec = -1;
+		}
+		else if (mode)
+		{
+			ft_putstr_fd("get_time() error\n", 2);
+			vars->finished = 1;
+			*ec = -1;
+		}
 		return (1);
 	}
 	*ec = 0;
 	return ((tv.tv_sec * (__uint64_t)1000) + (tv.tv_usec / 1000));
 }
 
-int	ft_usleep(__useconds_t milliseconds, t_vars *vars)
+int	ft_usleep(__useconds_t ms, t_vars *vars)
 {
 	__uint64_t	start;
 	int			ec;
 
-	start = get_time(vars, &ec);
-	while (!ec && (long long int)(get_time(vars, &ec) - start) < milliseconds)
+	start = get_time(vars, &ec, 0);
+	while (!ec && (long long int)(get_time(vars, &ec, 0) - start) < ms)
 	{
 		if (!phil_died(vars, 0) && !ec)
 		{

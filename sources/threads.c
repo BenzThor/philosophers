@@ -6,7 +6,7 @@
 /*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:21:30 by thorben           #+#    #+#             */
-/*   Updated: 2024/03/13 13:44:44 by tbenz            ###   ########.fr       */
+/*   Updated: 2024/03/13 15:35:45 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	*ft_loop(void *phil_data)
 	t_phil	*phil;
 
 	phil = (t_phil *)phil_data;
-	if (phil->vars->phil_num == 1)
+	if (phil->vars->one_phil)
 		one_phil(phil->vars);
 	if (phil->id % 2 == 0)
 		ft_usleep(phil->vars->time_eat / 2, phil->vars);
@@ -72,12 +72,7 @@ void	create_threads(t_vars *vars, int *ec)
 	pthread_mutex_lock(&vars->dead);
 	while (++i < (int)vars->phil_num)
 	{
-		vars->phils[i].left_to_live = vars->time_die + get_time(vars, ec);
-		if (*ec)
-		{
-			vars->phil_num = i - 1;
-			break ;
-		}
+		vars->phils[i].left_to_live = vars->time_die + get_time(vars, ec, 1);
 		if (pthread_create(&vars->tid[i], NULL, &ft_loop, &vars->phils[i]))
 		{
 			ft_putstr_fd("An error occurred while creating the threads", 2);
@@ -93,14 +88,15 @@ void	ft_threads(t_vars *vars)
 {
 	int				ec;
 
-	vars->start_time = get_time(vars, &ec);
+	vars->start_time = get_time(vars, &ec, 0);
 	if (ec)
 	{
 		ft_error(vars, NOT_DEFINED);
 		return ;
 	}
 	create_threads(vars, &ec);
-	check_death(vars, vars->phils);
+	if (!vars->one_phil)
+		check_death(vars, vars->phils);
 	join_threads(vars);
 	ft_error(vars, OK);
 }

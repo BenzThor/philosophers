@@ -6,7 +6,7 @@
 /*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 14:50:22 by tbenz             #+#    #+#             */
-/*   Updated: 2024/03/12 10:12:55 by tbenz            ###   ########.fr       */
+/*   Updated: 2024/03/13 15:02:50 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_vars
 	__uint64_t		start_time;
 	unsigned int	finished;
 	unsigned int	finished_eating;
+	int				one_phil;
 	int				ec;
 	int				in_check;
 	int				init_check;
@@ -63,6 +64,22 @@ typedef struct s_vars
 void				phil_output(int event, t_phil *phil);
 // the philosopher picks up two forks, eats, drops the forks and sleeps
 void				eat(t_phil *phil);
+// grabs the forks (diferently for last philo, otherwise the prog does not work)
+void				grab_forks(t_phil *philo);
+// unlock mutexes used to protect the forks
+void				let_go_forks(t_phil *philo);
+
+/* checker */
+
+// checks whether a philo has died or all philos have finished eating
+void				check_death(t_vars *vars, t_phil *phil);
+// checks whether the philo has already eaten the required amount of times
+int					phil_fed(t_phil *phil);
+// tests whether the program already died and otherwise outputs behaviour
+void				test_dead_output(t_vars *vars, t_phil *phil, int behaviour);
+/* if in mode 0 tests whether a philo has died and in mode 1 sets vars->finished
+	to 1 */
+int					phil_died(t_vars *vars, int mode);
 
 /* error */
 
@@ -98,16 +115,16 @@ long long int		ft_atoi_ll(t_vars *vars, const char *str);
 
 /* threads */
 
-// tests whether the program already died and otherwise outputs behaviour
-void				test_dead_output(t_vars *vars, t_phil *phil, int behaviour);
 // creates the threads, enters the loop and afterwards joins the threads again
 void				ft_threads(t_vars *vars);
-// tracks whether the prog has finished (either one phil died or all have eaten)
-void				*ft_track_finished(void *phil_data);
+// creates the threats, if an error occurs, stops the execution
+void				create_threads(t_vars *vars, int *ec);
 // loop which is cycled until every phil has eaten or one has died
 void				*ft_loop(void *phil_data);
-// sets the tracking variables (eaten, dead, finished_eating)
-void				*ft_executive(void *phil_data);
+// joins the threads
+void				join_threads(t_vars *vars);
+// executes the process for just one philo
+void				one_phil(t_vars *vars);
 
 /* utils_write */
 
@@ -130,14 +147,12 @@ size_t				ft_strlen(const char *s);
 	nmemb or size is 0, then calloc() returns either NULL, or a unique pointer
 	value that can later be successfully passed to free().  */
 void				*ft_calloc(size_t nmemb, size_t size);
-// gets the time (starting from 1970) in microseconds and returns it
-__uint64_t			get_time(t_vars *vars, int *ec);
+/* gets the time (starting from 1970) in microseconds and returns it; mode 0
+is the default for use in the loop, it locks vars->finished before setting it;
+mode 1 is for creation where vars->finished shouldn't be locked (it already is)
+*/
+__uint64_t			get_time(t_vars *vars, int *ec, int mode);
 // usleep that uses get_time for more accuracy
-int					ft_usleep(__useconds_t milliseconds, t_vars *vars);
-
-/* if in mode 0 tests whether a philo has died and in mode 1 sets vars->finished
-	to 1 */
-int					phil_died(t_vars *vars, int mode);
-void				check_death(t_vars *vars, t_phil *phil);
+int					ft_usleep(__useconds_t ms, t_vars *vars);
 
 #endif

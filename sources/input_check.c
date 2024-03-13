@@ -6,7 +6,7 @@
 /*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 15:06:31 by tbenz             #+#    #+#             */
-/*   Updated: 2024/03/09 13:00:41 by tbenz            ###   ########.fr       */
+/*   Updated: 2024/03/13 14:04:50 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,11 @@ void	ft_save_num(t_vars *vars, char *str, int i)
 	if (uns == 0 && i != 5)
 		ft_error(vars, NEG_ERR);
 	if (i == 1)
+	{
 		vars->phil_num = uns;
+		if (uns == 1)
+			vars->one_phil = 1;
+	}
 	else if (i == 2)
 		vars->time_die = uns;
 	else if (i == 3)

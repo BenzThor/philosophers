@@ -6,7 +6,7 @@
 /*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:11:38 by tbenz             #+#    #+#             */
-/*   Updated: 2024/03/12 11:04:54 by tbenz            ###   ########.fr       */
+/*   Updated: 2024/03/13 14:42:36 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	check_death(t_vars *vars, t_phil *phil)
 		while (++i < (int)vars->phil_num && !phil_died(vars, 0))
 		{
 			pthread_mutex_lock(&vars->phils[i].lock);
-			if (phil[i].left_to_live < get_time(vars, &ec) && !ec)
+			if (phil[i].left_to_live < get_time(vars, &ec, 0) && !ec)
 				phil_output(DEAD, &vars->phils[i]);
 			pthread_mutex_unlock(&vars->phils[i].lock);
 			usleep(100);
