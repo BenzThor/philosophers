@@ -6,7 +6,7 @@
 /*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:19:12 by thorben           #+#    #+#             */
-/*   Updated: 2024/03/09 13:34:37 by tbenz            ###   ########.fr       */
+/*   Updated: 2024/03/15 13:13:02 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ void	forkinit(t_vars *vars)
 
 void	mallocate(t_vars *vars)
 {
-	vars->tid = calloc(vars->phil_num, sizeof(pthread_t));
-	vars->forks = calloc(vars->phil_num, sizeof(pthread_mutex_t));
-	vars->phils = calloc(vars->phil_num, sizeof(t_phil));
+	vars->tid = ft_calloc(vars->phil_num, sizeof(pthread_t));
+	vars->forks = ft_calloc(vars->phil_num, sizeof(pthread_mutex_t));
+	vars->phils = ft_calloc(vars->phil_num, sizeof(t_phil));
 	if (!vars->tid || !vars->forks || !vars->phils)
 		ft_error(vars, MALLOC_ERR);
 }

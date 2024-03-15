@@ -6,7 +6,7 @@
 /*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:21:30 by thorben           #+#    #+#             */
-/*   Updated: 2024/03/13 15:35:45 by tbenz            ###   ########.fr       */
+/*   Updated: 2024/03/15 15:07:18 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,13 @@
 
 void	one_phil(t_vars *vars)
 {
-	printf("0 1 has taken a fork\n");
-	if (ft_usleep(vars->time_die, vars) == -1)
-		return ;
-	printf("%u 1 died\n", vars->time_die + 1);
+	if (vars->eat_req > 0)
+	{
+		printf("0 1 has taken a fork\n");
+		if (ft_usleep(vars->time_die, vars) == -1)
+			return ;
+		printf("%u 1 died\n", vars->time_die + 1);
+	}
 	phil_died(vars, 1);
 }
 

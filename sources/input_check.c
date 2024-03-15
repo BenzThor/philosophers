@@ -6,7 +6,7 @@
 /*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 15:06:31 by tbenz             #+#    #+#             */
-/*   Updated: 2024/03/13 14:04:50 by tbenz            ###   ########.fr       */
+/*   Updated: 2024/03/15 15:14:44 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,30 @@
 
 long long int	ft_atoi_ll(t_vars *vars, const char *str)
 {
-	long long int	sign;
 	long long int	sum;
 
-	sign = 1;
 	if (*str == '-' || *str == '+')
 	{
 		if (*str == '-')
-			sign *= -1;
+		{
+			ft_error(vars, NEG_ERR);
+			return (-1);
+		}
 		str++;
 	}
 	sum = 0;
 	while (*str >= '0' && *str <= '9')
 	{
 		if (sum > __LONG_LONG_MAX__ / 10 || (sum == __LONG_LONG_MAX__ / 10
-				&& sign == 1 && *str > '7') || (sum == __LONG_LONG_MAX__ / 10
-				&& sign == -1 && *str > '8'))
+				&& *str > '7') || (sum == __LONG_LONG_MAX__ / 10 && *str > '8'))
+		{
 			ft_error(vars, EXC_ERR);
+			return (1);
+		}
 		sum *= 10;
 		sum += (*str - '0');
 		str++;
 	}
-	sum *= sign;
-	if (sum < 0)
-		ft_error(vars, NEG_ERR);
 	return (sum);
 }
 
@@ -47,10 +47,12 @@ void	ft_save_num(t_vars *vars, char *str, int i)
 	unsigned int	uns;
 
 	llint = ft_atoi_ll(vars, str);
+	if (llint < 0)
+		return ;
 	if (llint > UINT_MAX)
 		ft_error(vars, EXC_ERR);
 	uns = (unsigned)llint;
-	if (uns == 0 && i != 5)
+	if (!vars->ec && uns == 0 && i != 5)
 		ft_error(vars, NEG_ERR);
 	if (i == 1)
 	{

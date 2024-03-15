@@ -6,7 +6,7 @@
 /*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:11:38 by tbenz             #+#    #+#             */
-/*   Updated: 2024/03/13 14:42:36 by tbenz            ###   ########.fr       */
+/*   Updated: 2024/03/15 14:58:28 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	phil_fed(t_phil *phil)
 	}
 }
 
+			// usleep(100);
 void	check_death(t_vars *vars, t_phil *phil)
 {
 	int	i;
@@ -68,7 +69,6 @@ void	check_death(t_vars *vars, t_phil *phil)
 			if (phil[i].left_to_live < get_time(vars, &ec, 0) && !ec)
 				phil_output(DEAD, &vars->phils[i]);
 			pthread_mutex_unlock(&vars->phils[i].lock);
-			usleep(100);
 		}
 		if (phil_died(vars, 0))
 			break ;
