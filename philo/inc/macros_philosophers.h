@@ -6,7 +6,7 @@
 /*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:52:29 by bpochlau          #+#    #+#             */
-/*   Updated: 2024/03/11 12:13:39 by tbenz            ###   ########.fr       */
+/*   Updated: 2024/03/24 12:14:20 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # define PHIL_ERR 1400
 # define EXC_ERR 1500
 # define NEG_ERR 1600
+# define ZERO_EXC 1700
 # define THREAD_ERR 1900
 # define JOIN_ERR 2000
 

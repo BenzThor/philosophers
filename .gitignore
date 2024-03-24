@@ -3,7 +3,6 @@ a.out
 *.a
 *.d
 *.h.*
-philo
 .vscode
 *.h.gch
 .nfs*

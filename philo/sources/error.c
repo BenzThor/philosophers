@@ -6,7 +6,7 @@
 /*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 15:08:40 by tbenz             #+#    #+#             */
-/*   Updated: 2024/03/09 13:34:43 by tbenz            ###   ########.fr       */
+/*   Updated: 2024/03/24 12:18:53 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	ft_print_err(t_vars *vars, int ec)
 		ft_putstr_fd("An error occured while creating the threads\n", 2);
 	else if (ec == JOIN_ERR)
 		ft_putstr_fd("An error occured while joining the threads\n", 2);
+	else if (ec == ZERO_EXC)
+		ft_putstr_fd("Nice try: the program ran 0 times now!\n", 1);
 	vars->ec = ec;
 }
 

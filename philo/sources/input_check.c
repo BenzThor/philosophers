@@ -6,7 +6,7 @@
 /*   By: tbenz <tbenz@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 15:06:31 by tbenz             #+#    #+#             */
-/*   Updated: 2024/03/15 15:14:44 by tbenz            ###   ########.fr       */
+/*   Updated: 2024/03/24 12:21:37 by tbenz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,8 @@ long long int	ft_atoi_ll(t_vars *vars, const char *str)
 	return (sum);
 }
 
-void	ft_save_num(t_vars *vars, char *str, int i)
+void	number_to_struct(t_vars *vars, int i, unsigned int uns)
 {
-	long long int	llint;
-	unsigned int	uns;
-
-	llint = ft_atoi_ll(vars, str);
-	if (llint < 0)
-		return ;
-	if (llint > UINT_MAX)
-		ft_error(vars, EXC_ERR);
-	uns = (unsigned)llint;
 	if (!vars->ec && uns == 0 && i != 5)
 		ft_error(vars, NEG_ERR);
 	if (i == 1)
@@ -67,7 +58,26 @@ void	ft_save_num(t_vars *vars, char *str, int i)
 	else if (i == 4)
 		vars->time_sleep = uns;
 	else if (i == 5)
-		vars->eat_req = uns;
+	{
+		if (uns == 0)
+			ft_error(vars, ZERO_EXC);
+		else
+			vars->eat_req = uns;
+	}
+}
+
+void	ft_save_num(t_vars *vars, char *str, int i)
+{
+	long long int	llint;
+	unsigned int	uns;
+
+	llint = ft_atoi_ll(vars, str);
+	if (llint < 0)
+		return ;
+	if (llint > UINT_MAX)
+		ft_error(vars, EXC_ERR);
+	uns = (unsigned)llint;
+	number_to_struct(vars, i, uns);
 }
 
 void	ft_check_number(t_vars *vars, char *str)
